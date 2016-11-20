@@ -6,7 +6,9 @@ import { SoftwareDataService } from './software-data-service';
 import {
   IMdlTableModelItem,
   MdlDefaultTableModel,
-  MdlDialogComponent
+  MdlDialogComponent,
+  // MdlDialogReference,
+  // MdlDialogService,
 } from 'angular2-mdl';
 
 
@@ -37,7 +39,9 @@ export class Softwares {
 		}
 	}
 	// let dialog = element();
-	constructor(private softwareDataService: SoftwareDataService) {}
+	constructor(
+		private softwareDataService: SoftwareDataService
+		) {}
 
 	public tableModel = new MdlDefaultTableModel([
 	  {key: 'productId', name: 'productId', sortable: true, numeric: true},
@@ -69,19 +73,9 @@ export class Softwares {
 
 	public closeTheForm(software:Software) {}
 
-	public showDialog() {
 
-	    let pDialog = this.dialogService.showCustomDialog({
-	      component: LoginDialogComponent,
-	      providers: [{provide: TEST_VALUE, useValue: 'Just an example'}],
-	      isModal: true,
-	      styles: {'width': '350px'},
-	      clickOutsideToClose: true,
-	      enterTransitionDuration: 400,
-	      leaveTransitionDuration: 400
-	    });
-	    pDialog.then( (dialogReference: MdlDialogReference) => {
-	      console.log('dialog visible', dialogReference);
-	    });
-	  }
+	// public showDialog() {
+	//     let result = this.dialogService.alert('This is a simple Alert');
+	//       result.then( () => console.log('alert closed') );
+	//   }
 }
