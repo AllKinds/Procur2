@@ -1,0 +1,65 @@
+<form [formGroup]="form">
+
+  <h3 class="mdl-dialog__title">Add Task</h3>
+  <div class="mdl-dialog__content">
+    <!-- <mdl-textfield type="text" label="Username" [(ngModel)]="username" floating-label autofocus></mdl-textfield> -->
+<!--     <p>
+      <mdl-textfield label="First Name" name="firstname" type="text" formControlName="firstName" floating-label></mdl-textfield>
+      <mdl-textfield label="Last Name" name="lastname" type="text" formControlName="lastName" floating-label></mdl-textfield>
+    </p>
+    <p>
+      Which breakfast do you prefer?<br/>
+      <mdl-radio name="breakfast" value="Continental" formControlName="breakfast" mdl-ripple>Continental</mdl-radio>
+      <mdl-radio name="breakfast" value="British" formControlName="breakfast" mdl-ripple>British</mdl-radio>
+    </p>
+    <p>
+      What would you like to drink?<br/>
+      <mdl-radio name="toDrink" value="Coffee" formControlName="toDrink" mdl-ripple>Coffee</mdl-radio>
+      <mdl-radio name="toDrink" value="Tea" formControlName="toDrink" mdl-ripple>Tea</mdl-radio>
+    </p>
+    <p>
+      <mdl-textfield
+              label="Email"
+              name="email"
+              type="text"
+              formControlName="email"
+              floating-label
+              pattern="^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$"
+              error-msg="Please provide a correct email!"></mdl-textfield>
+      <mdl-textfield
+              [class.is-invalid]="email2.invalid"
+              label="Email (2)"
+              name="email2"
+              type="text"
+              formControlName="email2"
+              disableNativeValidityChecking
+              [error-msg]="'Please provide a correct email!'"
+              floating-label></mdl-textfield> -->
+      <!--        Mine        -->
+      <mdl-textfield
+              label="Product ID"
+              name="productId"
+              type="number"
+              formControlName="productId"
+              floating-label
+              pattern="[1-9]+[0-9]*"></mdl-textfield>
+      <mdl-textfield
+              label="Publisher Name"
+              name="publisherName"
+              type="text"
+              formControlName="publisherName"
+              floating-label></mdl-textfield>
+      <mdl-textfield
+              label="Licence Cost"
+              name="licenceCost"
+              type="number"
+              formControlName="licenceCost"
+              floating-label></mdl-textfield>
+    <br/>
+  </div>
+  <div class="mdl-dialog__actions">
+    <!-- <button mdl-button (click)="saveUser()" mdl-button-type="raised" mdl-colored="primary" mdl-ripple>Save</button> -->
+    <button mdl-button (click)="closeForm()" mdl-ripple>Cancel</button>
+    <button mdl-button (click)="onSubmit()"  [disabled]="!form.valid" mdl-button-type="raised" mdl-ripple mdl-colored="primary">Submit</button>
+  </div>
+</form>
