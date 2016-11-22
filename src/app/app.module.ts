@@ -8,14 +8,17 @@ import { MdlModule } from 'angular2-mdl';
 import { AppComponent } from './app.component';
 import { Softwares } from './softwares/softwares.component';
 import { ReactiveFormsDemo } from './softwares/reactiveForm/reactiveform.component';
-import { DialogDemo } from './softwares/newSoftware/newSoftware.component';
+// import { DialogDemo } from './softwares/newSoftware/newSoftware.component';
 // Services
 import { SoftwareDataService } from './softwares/software-data-service';
 import { MdlDialogService,  } from 'angular2-mdl';
 
 import { RouterModule } from '@angular/router';
+import { LoginModule } from './softwares/newSoftware/login.module';
 
-import { LoginDialogComponent } from './softwares/newSoftware/login-dialog.component';
+// import { LoginDialogComponent } from './softwares/newSoftware/login-dialog.component';
+import { DialogDemo } from './softwares/newSoftware/dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -23,8 +26,9 @@ import { LoginDialogComponent } from './softwares/newSoftware/login-dialog.compo
     Softwares,
     ReactiveFormsDemo,
     DialogDemo,
-    LoginDialogComponent
+    // LoginDialogComponent
   ],
+  // entryComponents: [LoginDialogComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -32,7 +36,8 @@ import { LoginDialogComponent } from './softwares/newSoftware/login-dialog.compo
     RouterModule,
     // Mine
     MdlModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoginModule
   ],
   providers: [
     SoftwareDataService,
