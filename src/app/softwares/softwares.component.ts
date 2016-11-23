@@ -73,6 +73,9 @@ export class Softwares {
 
 	public closeTheForm(software:Software) {}
 
+	onVoted(str: string){
+		alert("Hurray!");
+	}
 
 	// public showDialog() {
 	//     let result = this.dialogService.alert('This is a simple Alert');

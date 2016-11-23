@@ -1,14 +1,14 @@
 import { Component, Renderer } from '@angular/core';
-import {
-  Router,
-  ActivatedRoute
-} from '@angular/router';
+
 import { Title } from '@angular/platform-browser';
+
 import {
   MdlDialogService,
   MdlDialogReference,
   MdlSnackbarService,
+  IOpenCloseRect
 } from 'angular2-mdl';
+
 import {
   LoginDialogComponent,
   TEST_VALUE
@@ -22,12 +22,8 @@ import {
 export class DialogDemo {
 
   constructor(
-    // router: Router,
-    // route: ActivatedRoute,
-    titleService: Title,
     private dialogService: MdlDialogService,
     private snackbarService: MdlSnackbarService) {
-
   }
 
   public showAlert() {
@@ -45,6 +41,10 @@ export class DialogDemo {
         console.log('declined');
       }
     );
+    // if you only need the confirm answer
+    result.onErrorResumeNext().subscribe( () => {
+      console.log('confirmed 2');
+    })
   }
 
   public showDialogFullWidthAction($event: MouseEvent) {
@@ -79,7 +79,7 @@ export class DialogDemo {
         left: document.body.offsetWidth/2,
         height: 0,
         top: document.body.offsetHeight/2,
-        width: 0} // as IOpenCloseRect
+        width: 0} as IOpenCloseRect
     });
     pDialog.subscribe( (dialogReference) => console.log('dialog visible', dialogReference) );
   }

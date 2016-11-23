@@ -14,9 +14,11 @@ import {
   IOpenCloseRect
 } from 'angular2-mdl';
 import {
-  LoginDialogComponent,
-  TEST_VALUE
+  // LoginDialogComponent,
+  // TEST_VALUE
 } from './login-dialog.component';
+// Mine
+import { NewSoftwareDialog, TEST_VALUE } from  './newSoftwareDialog.component';
 
 
 @Component({
@@ -101,8 +103,8 @@ export class DialogDemo {
   public showDialog($event: MouseEvent) {
 
     let pDialog = this.dialogService.showCustomDialog({
-      component: LoginDialogComponent,
-      providers: [{provide: TEST_VALUE, useValue: 'Just an example'}],
+      component: NewSoftwareDialog,
+      providers: [{provide: TEST_VALUE, useValue: this.helloFunc}],
       isModal: true,
       styles: {'width': '300px'},
       clickOutsideToClose: true,
@@ -112,7 +114,14 @@ export class DialogDemo {
     });
     pDialog.subscribe( (dialogReference: MdlDialogReference) => {
       console.log('dialog visible', dialogReference);
+      console.log("BlaBla"+TEST_VALUE);
     });
+    pDialog.subscribe( () => console.log('alert closed') );
+
+
   }
 
+  public helloFunc() {
+    alert("hello there...");
+  }
 }

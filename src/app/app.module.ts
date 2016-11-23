@@ -18,6 +18,8 @@ import { LoginModule } from './softwares/newSoftware/login.module';
 
 // import { LoginDialogComponent } from './softwares/newSoftware/login-dialog.component';
 import { DialogDemo } from './softwares/newSoftware/dialog.component';
+// import { NewSoftwareDialog } from  './softwares/newSoftware/newSoftwareDialog.component';
+
 
 
 @NgModule({
