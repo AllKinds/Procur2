@@ -33,13 +33,11 @@ export class NewSoftwareDialog implements OnInit {
 
 
   public form: FormGroup;
-  public username = new FormControl('',  Validators.required);
-  public password = new FormControl('', Validators.required);
-  // Mine //
+
   public productId = new FormControl('', Validators.required);
   public publisherName= new FormControl('', Validators.required);
   public licenceCost= new FormControl('', Validators.required);
-  // ---- //
+
   public processingLogin = false;
   public statusMessage = '';
   public myEmitt: EventEmitter<Software>;
@@ -65,8 +63,6 @@ export class NewSoftwareDialog implements OnInit {
 
   public ngOnInit() {
     this.form = this.fb.group({
-      'username':       this.username,
-      'password':       this.password,
       'productId':      this.productId,
       'publisherName':  this.publisherName,
       'licenceCost':    this.licenceCost 
@@ -74,22 +70,22 @@ export class NewSoftwareDialog implements OnInit {
   }
 
 
-  public login() {
-    this.processingLogin = true;
-    this.statusMessage = 'checking your credentials ...';
+  // public login() {
+  //   this.processingLogin = true;
+  //   this.statusMessage = 'checking your credentials ...';
 
-    let obs = this.loginService.login(this.username.value, this.password.value);
-    obs.subscribe( () => {
+  //   let obs = this.loginService.login(this.username.value, this.password.value);
+  //   obs.subscribe( () => {
 
-      this.processingLogin = false;
-      this.statusMessage = 'you are logged in ...';
+  //     this.processingLogin = false;
+  //     this.statusMessage = 'you are logged in ...';
 
-      setTimeout( () => {
-        this.dialog.hide();
-      }, 500);
+  //     setTimeout( () => {
+  //       this.dialog.hide();
+  //     }, 500);
 
-    });
-  }
+  //   });
+  // }
 
   @HostListener('keydown.esc')
   public onEsc(): void {
@@ -97,6 +93,9 @@ export class NewSoftwareDialog implements OnInit {
   }
 
   public onSubmit() {
+    this.processingLogin = true;
+    this.statusMessage = 'checking your request ...';
+
     console.log(this.form.value);
 
     this.newSoft = new Software(
@@ -105,7 +104,13 @@ export class NewSoftwareDialog implements OnInit {
       this.licenceCost.value
       );
 
+    
+    this.statusMessage = 'Submiting your request';
+
     this.myEmitt.emit(this.newSoft);
-    this.dialog.hide();
+    setTimeout( () => { // Remeber To Delete That Delay
+      this.processingLogin = false;
+      this.dialog.hide();
+    }, 500);
   }
 }

@@ -1,18 +1,3 @@
 <mdl-table mdl-shadow="2" [table-model]="tableModel"></mdl-table>
-<button #editUserButton mdl-button mdl-button-type="raised" mdl-colored="primary"
-        mdl-ripple (click)="editUserDialog.show()">New Software</button>
-
-<!-- <mdl-dialog #editUserDialog
-            [mdl-dialog-config]="{
-              clickOutsideToClose: true,
-              styles:{'width': '300px'},
-              isModal:true,
-              openFrom: editUserButton,
-              enterTransitionDuration: 400,
-              leaveTransitionDuration: 400 }"
-            (show)="onDialogShow(dialogRef)"
-            (hide)="onDialogHide()">
-   <reactive-form-demo [closeForm]="closeTheForm"></reactive-form-demo>
-</mdl-dialog>  -->
 
 <dialog-demo (newSoftware)='onCreateNewSoftware($event)'></dialog-demo>
