@@ -12,7 +12,9 @@ import { LoginService } from './login.service';
 import { FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms';
 import { MdlTextFieldComponent, MdlDialogReference } from 'angular2-mdl';
 
-export const TEST_VALUE = new OpaqueToken('test value');
+import { Software } from '../software';
+
+export const MY_EMITT = new OpaqueToken('testy value');
 const numValidator = Validators.pattern('[1-9]+[0-9]*');
 
 @Component({
@@ -28,9 +30,7 @@ const numValidator = Validators.pattern('[1-9]+[0-9]*');
 })
 export class NewSoftwareDialog implements OnInit {
 
-  @Output() outputVar = new EventEmitter<string>();
 
-  @ViewChild('firstElement') private inputElement: MdlTextFieldComponent;
 
   public form: FormGroup;
   public username = new FormControl('',  Validators.required);
@@ -42,22 +42,22 @@ export class NewSoftwareDialog implements OnInit {
   // ---- //
   public processingLogin = false;
   public statusMessage = '';
-  public testValue:Function;
+  public myEmitt: EventEmitter<Software>;
+  public newSoft: Software;
 
   constructor(
     private dialog: MdlDialogReference,
     private fb: FormBuilder,
     private loginService: LoginService,
-    @Inject( TEST_VALUE) testValue: Function) {
+    @Inject( MY_EMITT) myEmitt: EventEmitter<Software>
+    ){
 
-    console.log(`injected test value: ${testValue}`);
-    this.testValue = testValue;
+    this.myEmitt = myEmitt;
     // just if you want to be informed if the dialog is hidden
     this.dialog.onHide().subscribe( () => console.log('login dialog hidden') );
     this.dialog.onVisible().subscribe( () => {
       console.log('set focus');
-      testValue();
-      this.inputElement.setFocus();
+      //submit_new_software();
     });
 
   }
@@ -98,8 +98,14 @@ export class NewSoftwareDialog implements OnInit {
 
   public onSubmit() {
     console.log(this.form.value);
-    this.outputVar.emit(this.form.value.publisherName);
-    this.testValue();
+
+    this.newSoft = new Software(
+      this.productId.value,
+      this.publisherName.value,
+      this.licenceCost.value
+      );
+
+    this.myEmitt.emit(this.newSoft);
     this.dialog.hide();
   }
 }

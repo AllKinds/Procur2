@@ -1,4 +1,4 @@
-import { Component, Renderer } from '@angular/core';
+import { Component, Renderer, Output, EventEmitter } from '@angular/core';
 // import { flyInOutTrigger } from '../animations/flyInOutTrigger-animation';
 // import { hostConfig } from '../animations/flyInOutTrigger-animation';
 // import {
@@ -15,11 +15,11 @@ import {
 } from 'angular2-mdl';
 import {
   // LoginDialogComponent,
-  // TEST_VALUE
+  // NEW_SOFTWARE
 } from './login-dialog.component';
 // Mine
-import { NewSoftwareDialog, TEST_VALUE } from  './newSoftwareDialog.component';
-
+import { NewSoftwareDialog, MY_EMITT } from  './newSoftwareDialog.component';
+import { Software } from '../software';
 
 @Component({
   selector: 'dialog-demo',
@@ -31,6 +31,7 @@ import { NewSoftwareDialog, TEST_VALUE } from  './newSoftwareDialog.component';
 })
 export class DialogDemo {
 
+  @Output() newSoftware = new EventEmitter<Software>();
   constructor(
     // router: Router,
     // route: ActivatedRoute,
@@ -104,7 +105,9 @@ export class DialogDemo {
 
     let pDialog = this.dialogService.showCustomDialog({
       component: NewSoftwareDialog,
-      providers: [{provide: TEST_VALUE, useValue: this.helloFunc}],
+      providers: [
+        {provide: MY_EMITT, useValue: this.newSoftware},
+      ],
       isModal: true,
       styles: {'width': '300px'},
       clickOutsideToClose: true,
@@ -114,14 +117,9 @@ export class DialogDemo {
     });
     pDialog.subscribe( (dialogReference: MdlDialogReference) => {
       console.log('dialog visible', dialogReference);
-      console.log("BlaBla"+TEST_VALUE);
     });
     pDialog.subscribe( () => console.log('alert closed') );
 
 
-  }
-
-  public helloFunc() {
-    alert("hello there...");
   }
 }

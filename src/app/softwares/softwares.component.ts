@@ -29,15 +29,6 @@ export class Softwares {
 	public dialog:MdlDialogComponent;
 	private softwares;
 	public addSoftware:Function;
-	@ViewChild('editUserDialog') editUserDialog:MdlDialogComponent;
-
-	ngAfterViewInit() {
-		let dialog = this.editUserDialog;
-		this.closeTheForm = function(software:Software) {
-			if (software) {this.addSoftware(software)};
-			dialog.close();
-		}
-	}
 	// let dialog = element();
 	constructor(
 		private softwareDataService: SoftwareDataService
@@ -60,25 +51,12 @@ export class Softwares {
 		console.log('Hi!');
 		this.softwares.push(software);
 	}
-	  //this.theBoundCallback = this.closeTheForm.bind('this');
-	}
-
-	onDialogShow(dialogRef) {
 
 	}
 
-	onDialogHide() {
 
+	onCreateNewSoftware(newSoftware){
+		console.log(newSoftware);
+		this.tableModel.addAll([newSoftware]);
 	}
-
-	public closeTheForm(software:Software) {}
-
-	onVoted(str: string){
-		alert("Hurray!");
-	}
-
-	// public showDialog() {
-	//     let result = this.dialogService.alert('This is a simple Alert');
-	//       result.then( () => console.log('alert closed') );
-	//   }
 }
