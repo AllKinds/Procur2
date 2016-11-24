@@ -8,7 +8,7 @@ import {
   MdlDefaultTableModel,
   MdlDialogComponent,
   // MdlDialogReference,
-  // MdlDialogService,
+  MdlDialogService,
 } from 'angular2-mdl';
 
 
@@ -22,6 +22,7 @@ export interface ITableItem extends IMdlTableModelItem, AfterViewInit {
 @Component ({
 	selector: 'softwaresTab',
 	templateUrl: 'softwares.component.html',
+	// styleUrls:'
 })
 
 export class Softwares {
@@ -31,8 +32,9 @@ export class Softwares {
 	public addSoftware:Function;
 	// let dialog = element();
 	constructor(
-		private softwareDataService: SoftwareDataService
-		) {}
+		private softwareDataService: SoftwareDataService,
+		private dialogService: MdlDialogService
+	) {}
 
 	public tableModel = new MdlDefaultTableModel([
 	  {key: 'productId', name: 'productId', sortable: true, numeric: true},
@@ -50,13 +52,19 @@ export class Softwares {
 	  this.addSoftware = function(software:Software) {
 		console.log('Hi!');
 		this.softwares.push(software);
+	  }
 	}
 
+	showSoftwareInfo($event, index, software:Software){
+		console.log(event);
+		console.log(index);
+		console.log(software);
+		this.dialogService.alert(software.longStringify());
 	}
-
 
 	onCreateNewSoftware(newSoftware){
 		console.log(newSoftware);
+		this.softwares.push(newSoftware);
 		this.tableModel.addAll([newSoftware]);
 	}
 }

@@ -1,3 +1,22 @@
 <mdl-table mdl-shadow="2" [table-model]="tableModel"></mdl-table>
 
 <dialog-demo (newSoftware)='onCreateNewSoftware($event)'></dialog-demo>
+
+<table *ngIf="softwares" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+  <thead>
+    <tr>
+      <th class="mdl-data-table__cell--non-numeric">Product ID</th>
+      <th class="mdl-data-table__cell--non-numeric">Publisher Name</th>
+      <th class="mdl-data-table__cell--non-numeric">Licence Cost</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr 
+    *ngFor="let software of softwares; let i = index; trackBy: trackByFn" 
+    (click)='showSoftwareInfo($event,i,software)'>
+      <td class="mdl-data-table__cell--non-numeric" > {{ software.productId }} </td>
+      <td class="mdl-data-table__cell--non-numeric" > {{ software.publisherName }} </td>
+      <td> {{ software.licenceCost }} </td>
+    </tr>
+  </tbody>
+</table>

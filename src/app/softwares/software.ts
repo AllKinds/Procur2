@@ -5,4 +5,8 @@ export class Software {
 			public publisherName: string,
 			public licenceCost: number
 		){}
+	longStringify():string {
+		return "Software ID:\t" + this.productId + "\n Software publisher:\t" + this.publisherName + 
+				"\n Software Price:\t" + this.licenceCost;
+	}
 }
