@@ -35,6 +35,7 @@ export class NewSoftwareDialog implements OnInit {
   public form: FormGroup;
 
   public productId = new FormControl('', Validators.required);
+  public productName = new FormControl('', Validators.required);
   public publisherName= new FormControl('', Validators.required);
   public licenceCost= new FormControl('', Validators.required);
 
@@ -64,6 +65,7 @@ export class NewSoftwareDialog implements OnInit {
   public ngOnInit() {
     this.form = this.fb.group({
       'productId':      this.productId,
+      'productName':  this.productName,
       'publisherName':  this.publisherName,
       'licenceCost':    this.licenceCost 
     });
@@ -100,6 +102,7 @@ export class NewSoftwareDialog implements OnInit {
 
     this.newSoft = new Software(
       this.productId.value,
+      this.productName.value,
       this.publisherName.value,
       this.licenceCost.value
       );

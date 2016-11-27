@@ -7,9 +7,14 @@ import {
   IMdlTableModelItem,
   MdlDefaultTableModel,
   MdlDialogComponent,
-  // MdlDialogReference,
+  MdlDialogReference,
   MdlDialogService,
 } from 'angular2-mdl';
+
+import {
+	SoftwareInfoComponent,
+	SOFTWARE_PROPS
+} from './softwareInfoComponent.component'
 
 
 export interface ITableItem extends IMdlTableModelItem, AfterViewInit {
@@ -59,7 +64,19 @@ export class Softwares {
 		console.log(event);
 		console.log(index);
 		console.log(software);
-		this.dialogService.alert(software.longStringify());
+		// this.dialogService.alert(software.longStringify());
+
+		let pDialog = this.dialogService.showCustomDialog({
+			component: SoftwareInfoComponent,
+			providers: [{provide: SOFTWARE_PROPS, useValue: software}],
+			isModal: true,
+			clickOutsideToClose: true,
+			enterTransitionDuration: 400,
+			leaveTransitionDuration: 400
+		});
+		pDialog.subscribe( (dialogReference: MdlDialogReference) => {
+			console.log('info dialog is visible', dialogReference );
+		});
 	}
 
 	onCreateNewSoftware(newSoftware){
@@ -67,4 +84,6 @@ export class Softwares {
 		this.softwares.push(newSoftware);
 		this.tableModel.addAll([newSoftware]);
 	}
+
+
 }

@@ -15,7 +15,7 @@ import { Software } from './software';
 // 	}];
 
 export const SOFTWARES: Software[] = [
-	new Software(1,"Word", 55),
-	new Software(2,"Excel", 86),
-	new Software(3,"PowerPoint", 765),
+	new Software(1,"Word", "Office", 55),
+	new Software(2,"Excel", "Office", 86),
+	new Software(3,"PowerPoint", "Office", 765),
 ];

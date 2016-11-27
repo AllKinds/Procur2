@@ -2,6 +2,7 @@ export class Software {
 	constructor(
 			public productId: number,
 			//public producerId: number,
+			public productName: string,
 			public publisherName: string,
 			public licenceCost: number
 		){}

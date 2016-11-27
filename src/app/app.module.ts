@@ -8,6 +8,7 @@ import { MdlModule } from 'angular2-mdl';
 import { AppComponent } from './app.component';
 import { Softwares } from './softwares/softwares.component';
 import { ReactiveFormsDemo } from './softwares/reactiveForm/reactiveform.component';
+import { SoftwareInfoComponent } from './softwares/softwareInfoComponent.component';
 // import { DialogDemo } from './softwares/newSoftware/newSoftware.component';
 // Services
 import { SoftwareDataService } from './softwares/software-data-service';
@@ -28,9 +29,10 @@ import { DialogDemo } from './softwares/newSoftware/dialog.component';
     Softwares,
     ReactiveFormsDemo,
     DialogDemo,
+    SoftwareInfoComponent
     // LoginDialogComponent
   ],
-  // entryComponents: [LoginDialogComponent],
+  entryComponents: [ SoftwareInfoComponent ],
   imports: [
     BrowserModule,
     FormsModule,
