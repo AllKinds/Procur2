@@ -22,17 +22,25 @@ import { DialogDemo } from './softwares/newSoftware/dialog.component';
 // import { NewSoftwareDialog } from  './softwares/newSoftware/newSoftwareDialog.component';
 
 
+// Purchases
+ import { Purchases }             from './purchases/purchases.component';
+ import { PurchaseDataService }   from './data/purchase-data-service';
+ import { PurchaseInfoComponent } from './purchases/purchaseInfoComponent.component';
+// ---------
+
 
 @NgModule({
   declarations: [
     AppComponent,
     Softwares,
+    Purchases,
     ReactiveFormsDemo,
     DialogDemo,
-    SoftwareInfoComponent
+    SoftwareInfoComponent,
+    PurchaseInfoComponent
     // LoginDialogComponent
   ],
-  entryComponents: [ SoftwareInfoComponent ],
+  entryComponents: [ SoftwareInfoComponent, PurchaseInfoComponent ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -45,6 +53,7 @@ import { DialogDemo } from './softwares/newSoftware/dialog.component';
   ],
   providers: [
     SoftwareDataService,
+    PurchaseDataService,
     MdlDialogService,
   ],
   bootstrap: [AppComponent]

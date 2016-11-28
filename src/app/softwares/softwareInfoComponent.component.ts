@@ -12,7 +12,7 @@ export class SoftwareInfoComponent {
 	public softwareProps: Software;
 
 	constructor(
-		@Inject(SOFTWARE_PROPS) softwareProps:Software) {
+		@Inject(SOFTWARE_PROPS) softwareProps: Software) {
 		this.softwareProps = softwareProps;
 	}
 }

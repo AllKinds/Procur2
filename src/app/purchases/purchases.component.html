@@ -1,0 +1,28 @@
+<div id='purchases-div' class="tab-view">
+	<mdl-textfield id="purchase-search" type="text" label="Search..." [(ngModel)]="searchInput" floating-label></mdl-textfield>
+
+	<table id="purchases-table" *ngIf="purchases" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+	  <thead>
+	    <tr>
+	      <th class="mdl-data-table__cell--non-numeric">Software ID</th>
+	      <th class="mdl-data-table__cell--non-numeric">Unit ID</th>
+	      <th class="mdl-data-table__cell--non-numeric">Sub Unit</th>
+	      <th class="mdl-data-table__cell--non-numeric">Total Amount</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <template 
+	    ngFor let-purchase [ngForOf]="purchases" 
+	    let i = index>
+	      <tr 
+	      *ngIf="validOnSearch(purchase)"
+	      (click)='showPurchaseInfo($event,i,purchase)'>
+	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.softwareId }} </td>
+	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.unitId }} </td>
+	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.subUnit }} </td>
+	          <td> {{ purchase.totalAmount() }} Units </td>
+	      </tr>
+	    </template>
+	  </tbody>
+	</table>
+</div>
