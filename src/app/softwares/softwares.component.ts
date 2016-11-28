@@ -27,7 +27,7 @@ export interface ITableItem extends IMdlTableModelItem, AfterViewInit {
 @Component ({
 	selector: 'softwaresTab',
 	templateUrl: 'softwares.component.html',
-	// styleUrls:'
+ 	styleUrls: ['softwares.component.css']
 })
 
 export class Softwares {
@@ -35,6 +35,7 @@ export class Softwares {
 	public dialog:MdlDialogComponent;
 	private softwares;
 	public addSoftware:Function;
+	public searchInput="";
 	// let dialog = element();
 	constructor(
 		private softwareDataService: SoftwareDataService,
@@ -58,6 +59,14 @@ export class Softwares {
 		console.log('Hi!');
 		this.softwares.push(software);
 	  }
+	}
+
+	validOnSearch(software:Software): boolean {
+		return (!this.searchInput) ||
+		 software.productId.toString().includes(		this.searchInput.toLowerCase() ) ||
+		 software.productName.toLowerCase().includes(	this.searchInput.toLowerCase() ) ||
+		 software.publisherName.toLowerCase().includes(	this.searchInput.toLowerCase() ) ||
+		 software.licenceCost.toString().includes(		this.searchInput.toLowerCase() );
 	}
 
 	showSoftwareInfo($event, index, software:Software){

@@ -1,25 +1,32 @@
 <!-- <mdl-table mdl-shadow="2" [table-model]="tableModel"></mdl-table> -->
 
+<div id='software-div'>
+  <mdl-textfield id="software-search" type="text" label="Search..." [(ngModel)]="searchInput" floating-label></mdl-textfield>
 
+  <table *ngIf="softwares" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+    <thead>
+      <tr>
+        <th class="mdl-data-table__cell--non-numeric">Product ID</th>
+        <th class="mdl-data-table__cell--non-numeric">Software Name</th>
+        <th class="mdl-data-table__cell--non-numeric">Publisher Name</th>
+        <th class="mdl-data-table__cell--non-numeric">Licence Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      <template 
+      ngFor let-software [ngForOf]="softwares" 
+      let i = index>
+        <tr 
+        *ngIf="validOnSearch(software)"
+        (click)='showSoftwareInfo($event,i,software)'>
+            <td class="mdl-data-table__cell--non-numeric" > {{ software.productId }} </td>
+            <td class="mdl-data-table__cell--non-numeric" > {{ software.productName }} </td>
+            <td class="mdl-data-table__cell--non-numeric" > {{ software.publisherName }} </td>
+            <td> {{ software.licenceCost }} </td>
+        </tr>
+      </template>
+    </tbody>
+  </table>
 
-<table *ngIf="softwares" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-  <thead>
-    <tr>
-      <th class="mdl-data-table__cell--non-numeric">Product ID</th>
-      <th class="mdl-data-table__cell--non-numeric">Publisher Name</th>
-      <th class="mdl-data-table__cell--non-numeric">Licence Cost</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr 
-    *ngFor="let software of softwares; let i = index; trackBy: trackByFn" 
-    (click)='showSoftwareInfo($event,i,software)'>
-      <td class="mdl-data-table__cell--non-numeric" > {{ software.productId }} </td>
-      <td class="mdl-data-table__cell--non-numeric" > {{ software.productName }} </td>
-      <td class="mdl-data-table__cell--non-numeric" > {{ software.publisherName }} </td>
-      <td> {{ software.licenceCost }} </td>
-    </tr>
-  </tbody>
-</table>
-
-<dialog-demo (newSoftware)='onCreateNewSoftware($event)'></dialog-demo>
+  <dialog-demo (newSoftware)='onCreateNewSoftware($event)'></dialog-demo>
+</div>
