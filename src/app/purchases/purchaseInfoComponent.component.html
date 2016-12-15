@@ -67,7 +67,7 @@
         mdl-button (click)="addYear()"
         mdl-button-type="raised" 
         mdl-ripple mdl-colored="primary"
-        disabled = "!newAmountOfYearIsValid()" 
+        [disabled] = "!newAmountOfYearIsValid()" 
         *ngIf = "enableAddYear"
         >Submit</button>
   </div>

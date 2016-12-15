@@ -35,6 +35,9 @@ export class PurchaseInfoComponent {
 	}
 
 	addYear() {
-
+		this.purchase.amounts.push({year:parseInt(this.newYear), amount: parseInt(this.newAmount)});
+		this.newYear = "";
+		this.newAmount = "";
+		this.enableAddYear = false;
 	}
 }

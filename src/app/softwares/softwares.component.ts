@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit} from '@angular/core';
 import { Software } from './software';
 import { SoftwareDataService } from './software-data-service';
 
@@ -17,48 +17,58 @@ import {
 } from './softwareInfoComponent.component'
 
 
-export interface ITableItem extends IMdlTableModelItem, AfterViewInit {
-  productId: number;
-  publisherName: string;
-  licenceCost: number;
-}
-
-
 @Component ({
 	selector: 'softwaresTab',
 	templateUrl: 'softwares.component.html',
  	styleUrls: ['softwares.component.css']
 })
 
-export class Softwares {
+export class Softwares implements OnInit{
 	//softwares: Software[];
 	public dialog:MdlDialogComponent;
-	private softwares;
-	public addSoftware:Function;
+	public something: any;
+	private softwares: Software[];
+	public mode= 'Observable';
 	public searchInput="";
+	public errorMessage: string;
 	// let dialog = element();
 	constructor(
 		private softwareDataService: SoftwareDataService,
 		private dialogService: MdlDialogService
 	) {}
 
-	public tableModel = new MdlDefaultTableModel([
-	  {key: 'productId', name: 'productId', sortable: true, numeric: true},
-	  {key: 'publisherName', name: 'publisherName', sortable: true},
-	  {key: 'licenceCost', name: 'licenceCost', sortable: true, numeric: true}
-	]);
-
 	// constructor(router: Router, route: ActivatedRoute, titleService: Title) {
 	//   super(router, route, titleService);
 	// }
 
 	public ngOnInit() {
-	  this.softwares = this.softwareDataService.getSoftwares();
-	  this.tableModel.addAll(this.softwares);
-	  this.addSoftware = function(software:Software) {
-		console.log('Hi!');
+	  this.getSoftwares();
+	  // console.log(this.softwares);
+	}
+
+	getSoftwares() {
+		this.softwareDataService.getSoftwares()
+						.subscribe(
+							softwares 	=> this.softwares = softwares,
+							error 		=> this.errorMessage = <any>error);
+		console.log(this.softwares);
+		console.log(this.errorMessage);
+	}
+
+	addSoftware(software: Software) {
+		if(!software) {
+			return;
+		}
+		// this.softwares.push(software);
+		this.softwareDataService.addSoftware(software)
+			.subscribe(
+				software	=> this.pushSoftware(software),
+				error 		=> this.errorMessage = <any>error);
+	}
+
+	pushSoftware(software){
+		console.log("Im Here");
 		this.softwares.push(software);
-	  }
 	}
 
 	validOnSearch(software:Software): boolean {
@@ -90,8 +100,8 @@ export class Softwares {
 
 	onCreateNewSoftware(newSoftware){
 		console.log(newSoftware);
-		this.softwares.push(newSoftware);
-		this.tableModel.addAll([newSoftware]);
+		// this.softwares.push(newSoftware);
+		this.addSoftware(newSoftware);
 	}
 
 

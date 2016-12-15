@@ -42,6 +42,7 @@ export class Purchases {
 		let pDialog = this.dialogService.showCustomDialog({
 			component: PurchaseInfoComponent,
 			providers: [{provide: PURCHASE_PROPS, useValue: purchase}],
+			styles: {'width': '500px', 'overflow-y': 'auto', 'max-height': '90%'},
 			isModal: true,
 			clickOutsideToClose: true,
 		})

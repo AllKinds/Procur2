@@ -4,6 +4,9 @@ import {
   MdlDialogReference
 } from 'angular2-mdl';
 
+// Add the RxJS Observable operators.
+import './rxjs-operators';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
