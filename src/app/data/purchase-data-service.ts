@@ -1,9 +1,9 @@
-import { PURCHASES }  from './purchase_mocks';
-import { Injectable } from '@angular/core';
+// import { PURCHASES }  from './purchase_mocks';
+// import { Injectable } from '@angular/core';
 
-@Injectable()
-export class PurchaseDataService {
-	getPurchases() {
-		return PURCHASES;
-	}
-}
+// @Injectable()
+// export class PurchaseDataService {
+// 	getPurchases() {
+// 		return PURCHASES;
+// 	}
+// }

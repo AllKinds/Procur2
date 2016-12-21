@@ -1,18 +1,18 @@
 <!-- Two Line List with secondary info and action -->
 <style>
-.demo-list-two {
-  width: 300px;
-}
+  .demo-list-two {
+    width: 300px;
+  }
 </style>
 
-<h3 class="mdl-dialog__title">{{ softwareProps.productName }}</h3>
+<h3 class="mdl-dialog__title">{{ software.softwareName }}</h3>
 <div >
   <ul class="demo-list-two mdl-list">
     <li class="mdl-list__item mdl-list__item--two-line">
       <span class="mdl-list__item-primary-content">
         <i class="material-icons mdl-list__item-avatar">person</i>
         <span>Product ID</span>
-        <span class="mdl-list__item-sub-title"> {{ softwareProps.productId }} </span>
+        <span class="mdl-list__item-sub-title"> {{ software.softwareId }} </span>
       </span>
 <!--       <span class="mdl-list__item-secondary-content">
         <span class="mdl-list__item-secondary-info">Actor</span>
@@ -23,7 +23,7 @@
       <span class="mdl-list__item-primary-content">
         <i class="material-icons mdl-list__item-avatar">person</i>
         <span>Publisher Name</span>
-        <span class="mdl-list__item-sub-title">{{ softwareProps.publisherName }}</span>
+        <span class="mdl-list__item-sub-title">{{ software.publisherName }}</span>
       </span>
 <!--       <span class="mdl-list__item-secondary-content">
         <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
@@ -33,11 +33,19 @@
       <span class="mdl-list__item-primary-content">
         <i class="material-icons mdl-list__item-avatar">person</i>
         <span>Licence Cost</span>
-        <span class="mdl-list__item-sub-title">{{ softwareProps.licenceCost }}</span>
+        <span class="mdl-list__item-sub-title">{{ software.licenceCost }}</span>
       </span>
 <!--       <span class="mdl-list__item-secondary-content">
         <a class="mdl-list__item-secondary-action" href="#"><i class="material-icons">star</i></a>
       </span> -->
     </li>
   </ul>
+  <div class="actions">
+    <button 
+    type="button"
+    mdl-button (click)="onDelete(software)"
+    [disabled]=false
+    mdl-button-type="raised" 
+    mdl-ripple mdl-colored="primary">Delete</button>
+  </div>
 </div>

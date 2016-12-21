@@ -1,5 +1,7 @@
 import { Component, OpaqueToken, Inject } from '@angular/core';
-import { Purchase } from '../models/purchase'; 
+import { Purchase, deletePurchaseFromArray } from './purchase';
+import { PurchaseService } from './purchase.service';
+import { MdlDialogReference } from 'angular2-mdl';
 
 export const PURCHASE_PROPS = new OpaqueToken('tmp value');
 
@@ -14,7 +16,11 @@ export class PurchaseInfoComponent {
 	public newYear:string;
 	public newAmount:string;
 
-	constructor( @Inject(PURCHASE_PROPS) purchase: Purchase ) {
+	constructor( 
+		private dialog: MdlDialogReference,
+		private purchaseDataService: PurchaseService,
+		@Inject(PURCHASE_PROPS) purchase: Purchase 
+	) {
 		this.purchase = purchase;
 	}
 
@@ -36,8 +42,23 @@ export class PurchaseInfoComponent {
 
 	addYear() {
 		this.purchase.amounts.push({year:parseInt(this.newYear), amount: parseInt(this.newAmount)});
+
+		this.purchaseDataService.purchaseAddYear(this.purchase._id, parseInt(this.newYear), parseInt(this.newAmount))
+								.subscribe(
+									res => console.log(res),
+									err => console.log("Err: "+err)
+								);
+
 		this.newYear = "";
 		this.newAmount = "";
 		this.enableAddYear = false;
+	}
+
+	deletePurchase(purchase: Purchase) {
+		this.purchaseDataService.deletePurchase(purchase._id)
+								.subscribe(
+									purchase => {console.log("Deleted"); this.dialog.hide()},
+									error => console.log("Error: "+<any>error)
+								);
 	}
 }

@@ -11,10 +11,10 @@ import {
 import { LoginService } from './login.service';
 import { FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms';
 import { MdlTextFieldComponent, MdlDialogReference } from 'angular2-mdl';
+import { SoftwareDataService } from '../software-data-service';
 
 import { Software } from '../software';
 
-export const MY_EMITT = new OpaqueToken('testy value');
 const numValidator = Validators.pattern('[1-9]+[0-9]*');
 
 @Component({
@@ -41,17 +41,15 @@ export class NewSoftwareDialog implements OnInit {
 
   public processingLogin = false;
   public statusMessage = '';
-  public myEmitt: EventEmitter<Software>;
-  public newSoft: Software;
+  // public newSoft: Software;
 
   constructor(
+    private softwareDataService: SoftwareDataService,
     private dialog: MdlDialogReference,
     private fb: FormBuilder,
-    private loginService: LoginService,
-    @Inject( MY_EMITT) myEmitt: EventEmitter<Software>
+    private loginService: LoginService
     ){
 
-    this.myEmitt = myEmitt;
     // just if you want to be informed if the dialog is hidden
     this.dialog.onHide().subscribe( () => console.log('login dialog hidden') );
     this.dialog.onVisible().subscribe( () => {
@@ -61,7 +59,6 @@ export class NewSoftwareDialog implements OnInit {
 
   }
 
-
   public ngOnInit() {
     this.form = this.fb.group({
       'productId':      this.productId,
@@ -70,24 +67,6 @@ export class NewSoftwareDialog implements OnInit {
       'licenceCost':    this.licenceCost 
     });
   }
-
-
-  // public login() {
-  //   this.processingLogin = true;
-  //   this.statusMessage = 'checking your credentials ...';
-
-  //   let obs = this.loginService.login(this.username.value, this.password.value);
-  //   obs.subscribe( () => {
-
-  //     this.processingLogin = false;
-  //     this.statusMessage = 'you are logged in ...';
-
-  //     setTimeout( () => {
-  //       this.dialog.hide();
-  //     }, 500);
-
-  //   });
-  // }
 
   @HostListener('keydown.esc')
   public onEsc(): void {
@@ -100,20 +79,27 @@ export class NewSoftwareDialog implements OnInit {
 
     console.log(this.form.value);
 
-    this.newSoft = new Software(
+    let newSoft = new Software(
       this.productId.value,
       this.productName.value,
       this.publisherName.value,
       this.licenceCost.value
       );
 
-    
-    this.statusMessage = 'Submiting your request';
+    this.softwareDataService.addSoftware(newSoft)
+      .subscribe(
+        software  => {
+          console.log('Added : '+software);
+          this.statusMessage = 'Submiting your request';
 
-    this.myEmitt.emit(this.newSoft);
-    setTimeout( () => { // Remeber To Delete That Delay
-      this.processingLogin = false;
-      this.dialog.hide();
-    }, 500);
+          setTimeout( () => { // Remeber To Delete That Delay
+            this.processingLogin = false;
+            this.dialog.hide();
+          }, 500);
+        },
+        error     => console.log('Error : '+<any>error)
+      );
+    
+    
   }
 }

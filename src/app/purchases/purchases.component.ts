@@ -1,6 +1,7 @@
 import { Component } 		   from '@angular/core';
-import { Purchase }   		   from '../models/purchase';
-import { PurchaseDataService } from '../data/purchase-data-service';
+import { Purchase, totalAmount }   		   from './purchase';
+// import { PurchaseDataService } from '../data/purchase-data-service';
+import { PurchaseService } from './purchase.service';
 
 import {
 	MdlDialogService,
@@ -21,14 +22,27 @@ import {
 export class Purchases {
 	private purchases;
 	private searchInput="";
+	public calcTotalAmount = totalAmount;
+	public erroMsg: string;
 
 	constructor(
-		private purchaseDataService: PurchaseDataService,
-		private dialogService: MdlDialogService
+		// private purchaseDataService: PurchaseDataService,
+		private purchaseService: PurchaseService,
+		private dialogService: MdlDialogService,
+		// private dialog: MdlDialogReference
 	) {}
 
 	public ngOnInit() {
-		this.purchases = this.purchaseDataService.getPurchases();
+	  this.getPurchases();
+	}
+
+	getPurchases() {
+		this.purchaseService.getPurchases()
+						.subscribe(
+							purchases 	=> this.purchases = purchases,
+							error 		=> this.erroMsg = <any>error);
+		console.log(this.purchases);
+		console.log(this.erroMsg);
 	}
 
 	validOnSearch(purchase: Purchase): boolean {
@@ -49,5 +63,23 @@ export class Purchases {
 		pDialog.subscribe( (dialogReference: MdlDialogReference) => {
 			console.log('info dialog is visible', dialogReference );
 		});
+	}
+	tempAddPurchase(){
+		let purchase = new Purchase(
+			11,
+			12,
+			"subUnit",
+			[]
+		);
+		this.addPurchase(purchase);
+	}
+	addPurchase(purchase: Purchase){
+		this.purchaseService.addPurchase(purchase)
+			.subscribe(
+				purchase => {
+					console.log('Added: '+purchase);
+				},
+				error    => console.log("Error: "+<any>error)
+			);
 	}
 }

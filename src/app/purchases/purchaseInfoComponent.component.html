@@ -71,4 +71,12 @@
         *ngIf = "enableAddYear"
         >Submit</button>
   </div>
+  <div class="actions">
+    <button 
+    type="button"
+    mdl-button (click)="deletePurchase(purchase)"
+    [disabled]=false
+    mdl-button-type="raised" 
+    mdl-ripple mdl-colored="primary">Delete</button>
+  </div>
 </div>

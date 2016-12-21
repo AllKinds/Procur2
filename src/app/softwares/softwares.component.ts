@@ -2,7 +2,6 @@ import { Component, ViewChild, OnInit} from '@angular/core';
 import { Software } from './software';
 import { SoftwareDataService } from './software-data-service';
 
-
 import {
   IMdlTableModelItem,
   MdlDefaultTableModel,
@@ -24,26 +23,20 @@ import {
 })
 
 export class Softwares implements OnInit{
-	//softwares: Software[];
 	public dialog:MdlDialogComponent;
 	public something: any;
 	private softwares: Software[];
 	public mode= 'Observable';
 	public searchInput="";
 	public errorMessage: string;
-	// let dialog = element();
 	constructor(
 		private softwareDataService: SoftwareDataService,
 		private dialogService: MdlDialogService
 	) {}
 
-	// constructor(router: Router, route: ActivatedRoute, titleService: Title) {
-	//   super(router, route, titleService);
-	// }
 
 	public ngOnInit() {
 	  this.getSoftwares();
-	  // console.log(this.softwares);
 	}
 
 	getSoftwares() {
@@ -59,7 +52,6 @@ export class Softwares implements OnInit{
 		if(!software) {
 			return;
 		}
-		// this.softwares.push(software);
 		this.softwareDataService.addSoftware(software)
 			.subscribe(
 				software	=> this.pushSoftware(software),
@@ -73,8 +65,8 @@ export class Softwares implements OnInit{
 
 	validOnSearch(software:Software): boolean {
 		return (!this.searchInput) ||
-		 software.productId.toString().includes(		this.searchInput.toLowerCase() ) ||
-		 software.productName.toLowerCase().includes(	this.searchInput.toLowerCase() ) ||
+		 software.softwareId.toString().includes(		this.searchInput.toLowerCase() ) ||
+		 software.softwareName.toLowerCase().includes(	this.searchInput.toLowerCase() ) ||
 		 software.publisherName.toLowerCase().includes(	this.searchInput.toLowerCase() ) ||
 		 software.licenceCost.toString().includes(		this.searchInput.toLowerCase() );
 	}
@@ -83,7 +75,6 @@ export class Softwares implements OnInit{
 		console.log(event);
 		console.log(index);
 		console.log(software);
-		// this.dialogService.alert(software.longStringify());
 
 		let pDialog = this.dialogService.showCustomDialog({
 			component: SoftwareInfoComponent,
@@ -100,9 +91,7 @@ export class Softwares implements OnInit{
 
 	onCreateNewSoftware(newSoftware){
 		console.log(newSoftware);
-		// this.softwares.push(newSoftware);
 		this.addSoftware(newSoftware);
 	}
-
 
 }

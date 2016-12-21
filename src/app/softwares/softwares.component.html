@@ -3,7 +3,7 @@
 <div id='software-div'>
   <mdl-textfield id="software-search" type="text" label="Search..." [(ngModel)]="searchInput" floating-label></mdl-textfield>
 
-  <table *ngIf="softwares" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+  <table *ngIf="softwareDataService.softwares" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
     <thead>
       <tr>
         <th class="mdl-data-table__cell--non-numeric">Product ID</th>
@@ -14,13 +14,13 @@
     </thead>
     <tbody>
       <template 
-      ngFor let-software [ngForOf]="softwares" 
+      ngFor let-software [ngForOf]="softwareDataService.softwares" 
       let i = index>
         <tr 
         *ngIf="validOnSearch(software)"
         (click)='showSoftwareInfo($event,i,software)'>
-            <td class="mdl-data-table__cell--non-numeric" > {{ software.productId }} </td>
-            <td class="mdl-data-table__cell--non-numeric" > {{ software.productName }} </td>
+            <td class="mdl-data-table__cell--non-numeric" > {{ software.softwareId }} </td>
+            <td class="mdl-data-table__cell--non-numeric" > {{ software.softwareName }} </td>
             <td class="mdl-data-table__cell--non-numeric" > {{ software.publisherName }} </td>
             <td> {{ software.licenceCost }}$ </td>
         </tr>

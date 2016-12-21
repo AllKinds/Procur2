@@ -1,13 +1,20 @@
 export class Software {
 	constructor(
-			public productId: number,
-			public productName: string,
+			public softwareId: number,
+			public softwareName: string,
 			public publisherName: string,
 			public licenceCost: number,
-			public id?: string
+			public _id?: string
 		){}
-	longStringify():string {
-		return "Software ID:\t" + this.productId + "\n Software publisher:\t" + this.publisherName + 
-				"\n Software Price:\t" + this.licenceCost;
+}
+
+
+export function deleteSoftwareFromArray(softwares: Software[], id: string) {
+	for(let i=0; i<softwares.length; i++){
+		if(softwares[i]._id == id){
+			softwares.splice(i,1);
+			return 1;
+		}
 	}
+	return -1;
 }

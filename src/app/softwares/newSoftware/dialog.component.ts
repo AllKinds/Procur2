@@ -1,47 +1,27 @@
 import { Component, Renderer, Output, EventEmitter } from '@angular/core';
-// import { flyInOutTrigger } from '../animations/flyInOutTrigger-animation';
-// import { hostConfig } from '../animations/flyInOutTrigger-animation';
-// import {
-//   Router,
-//   ActivatedRoute
-// } from '@angular/router';
+
 import { Title } from '@angular/platform-browser';
-// import { AbstractDemoComponent } from '../abstract-demo.component';
 import {
   MdlDialogService,
   MdlDialogReference,
   MdlSnackbarService,
   IOpenCloseRect
 } from 'angular2-mdl';
-import {
-  // LoginDialogComponent,
-  // NEW_SOFTWARE
-} from './login-dialog.component';
 // Mine
-import { NewSoftwareDialog, MY_EMITT } from  './newSoftwareDialog.component';
+import { NewSoftwareDialog } from  './newSoftwareDialog.component';
 import { Software } from '../software';
 
 @Component({
   selector: 'dialog-demo',
-  // host: hostConfig,
-  // animations: [
-  //   flyInOutTrigger
-  // ],
   templateUrl: 'dialog.component.html'
 })
 export class DialogDemo {
 
   @Output() newSoftware = new EventEmitter<Software>();
   constructor(
-    // router: Router,
-    // route: ActivatedRoute,
-    // titleService: Title,
     private dialogService: MdlDialogService,
-    private snackbarService: MdlSnackbarService) {
-
-    // super(router, route, titleService);
-
-  }
+    private snackbarService: MdlSnackbarService
+  ) {}
 
   public showAlert() {
     let result = this.dialogService.alert('This is a simple Alert');
@@ -105,9 +85,7 @@ export class DialogDemo {
 
     let pDialog = this.dialogService.showCustomDialog({
       component: NewSoftwareDialog,
-      providers: [
-        {provide: MY_EMITT, useValue: this.newSoftware},
-      ],
+      providers: [],
       isModal: true,
       styles: {'width': '300px'},
       clickOutsideToClose: true,

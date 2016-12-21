@@ -1,7 +1,7 @@
 <div id='purchases-div' class="tab-view">
 	<mdl-textfield id="purchase-search" type="text" label="Search..." [(ngModel)]="searchInput" floating-label></mdl-textfield>
 
-	<table id="purchases-table" *ngIf="purchases" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+	<table id="purchases-table" *ngIf="purchaseService.purchases" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
 	  <thead>
 	    <tr>
 	      <th class="mdl-data-table__cell--non-numeric">Software ID</th>
@@ -12,7 +12,7 @@
 	  </thead>
 	  <tbody>
 	    <template 
-	    ngFor let-purchase [ngForOf]="purchases" 
+	    ngFor let-purchase [ngForOf]="purchaseService.purchases" 
 	    let i = index>
 	      <tr 
 	      *ngIf="validOnSearch(purchase)"
@@ -20,9 +20,17 @@
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.softwareId }} </td>
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.unitId }} </td>
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.subUnit }} </td>
-	          <td> {{ purchase.totalAmount() }} Units </td>
+	          <td> {{ calcTotalAmount(purchase) }} Units </td>
+	          <!-- <td> {{ calcTotalAmount(purchase) }} Units </td> -->
 	      </tr>
 	    </template>
 	  </tbody>
 	</table>
+	
+
+
+	<!-- Temp -->
+	<button (click)="tempAddPurchase()" mdl-button mdl-button-type="fab" mdl-colored="primary" mdl-ripple>
+	    <mdl-icon>add</mdl-icon>
+	 </button>
 </div>

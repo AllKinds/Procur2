@@ -12,6 +12,7 @@ import { SoftwareInfoComponent } from './softwares/softwareInfoComponent.compone
 // import { DialogDemo } from './softwares/newSoftware/newSoftware.component';
 // Services
 import { SoftwareDataService } from './softwares/software-data-service';
+import { PurchaseService } from './purchases/purchase.service';
 import { MdlDialogService,  } from 'angular2-mdl';
 
 import { RouterModule } from '@angular/router';
@@ -24,7 +25,7 @@ import { DialogDemo } from './softwares/newSoftware/dialog.component';
 
 // Purchases
  import { Purchases }             from './purchases/purchases.component';
- import { PurchaseDataService }   from './data/purchase-data-service';
+ // import { PurchaseDataService }   from './data/purchase-data-service';
  import { PurchaseInfoComponent } from './purchases/purchaseInfoComponent.component';
 // ---------
 
@@ -54,7 +55,8 @@ import { DialogDemo } from './softwares/newSoftware/dialog.component';
   ],
   providers: [
     SoftwareDataService,
-    PurchaseDataService,
+    // PurchaseDataService,
+    PurchaseService,
     MdlDialogService,
   ],
   bootstrap: [AppComponent]
