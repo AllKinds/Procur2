@@ -1,0 +1,63 @@
+<div id='units-div' class="tab-view">
+	<mdl-textfield id="unit-search" type="text" label="Search..." [(ngModel)]="searchInput" floating-label></mdl-textfield>
+
+<!-- 	<table id="units-table" *ngIf="unitService.units" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+	  <thead>
+	    <tr>
+	      <th class="mdl-data-table__cell--non-numeric">Unit Id</th>
+	      <th class="mdl-data-table__cell--non-numeric">Sub Unit</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <template 
+	    ngFor let-unit [ngForOf]="unitService.units" 
+	    let i = index>
+	      <tr 
+	      *ngIf="validOnSearch(unit)"
+	      >
+	          <td class="mdl-data-table__cell--non-numeric" > {{ unit.unitId }} </td>
+	          <td class="mdl-data-table__cell--non-numeric" > {{ unit.subUnit }} </td>
+	      </tr>
+	    </template>
+	  </tbody>
+	</table> -->
+	
+	<mdl-list *ngIf="unitService.units">
+		<template 
+		ngFor let-unit [ngForOf]="unitService.units" 
+		let i = index>
+		    <mdl-list-item lines="2">
+		      <mdl-list-item-primary-content>
+		        <mdl-icon mdl-list-item-avatar>person</mdl-icon>
+		        <span>{{ unit.subUnit }}</span>
+		        <mdl-list-item-sub-title> {{ unit.unitId }} </mdl-list-item-sub-title>
+		      </mdl-list-item-primary-content>
+		      <mdl-list-item-secondary-content>
+		   		<button (click)="deleteUnit(unit)" mdl-button mdl-colored="primary" mdl-ripple>
+		   		    Delete
+		   		 </button>
+		      </mdl-list-item-secondary-content>
+		    </mdl-list-item>
+	    </template>
+  </mdl-list>
+ 
+  <div class="quick-add">
+   	<mdl-textfield
+        type="text"
+        label="Unit"
+        floating-label
+        [(ngModel)]="unitId"></mdl-textfield>
+
+    <mdl-textfield
+        type="text"
+        label="Sub Unit"
+        floating-label
+        [(ngModel)]="subUnit"></mdl-textfield>
+
+	<!-- Temp -->
+	
+   </div> 
+   <button (click)="tempAddUnit()" mdl-button mdl-button-type="fab" mdl-colored="primary" mdl-ripple>
+	    <mdl-icon>add</mdl-icon>
+	 </button>
+</div>

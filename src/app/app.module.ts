@@ -7,12 +7,14 @@ import { MdlModule } from 'angular2-mdl';
 // Components
 import { AppComponent } from './app.component';
 import { Softwares } from './softwares/softwares.component';
+import { UnitsMgmnt } from './units/units.component';
 import { ReactiveFormsDemo } from './softwares/reactiveForm/reactiveform.component';
 import { SoftwareInfoComponent } from './softwares/softwareInfoComponent.component';
 // import { DialogDemo } from './softwares/newSoftware/newSoftware.component';
 // Services
 import { SoftwareDataService } from './softwares/software-data-service';
 import { PurchaseService } from './purchases/purchase.service';
+import { UnitService } from './units/unit.service';
 import { MdlDialogService,  } from 'angular2-mdl';
 
 import { RouterModule } from '@angular/router';
@@ -35,6 +37,7 @@ import { DialogDemo } from './softwares/newSoftware/dialog.component';
     AppComponent,
     Softwares,
     Purchases,
+    UnitsMgmnt,
     ReactiveFormsDemo,
     DialogDemo,
     SoftwareInfoComponent,
@@ -57,6 +60,7 @@ import { DialogDemo } from './softwares/newSoftware/dialog.component';
     SoftwareDataService,
     // PurchaseDataService,
     PurchaseService,
+    UnitService,
     MdlDialogService,
   ],
   bootstrap: [AppComponent]

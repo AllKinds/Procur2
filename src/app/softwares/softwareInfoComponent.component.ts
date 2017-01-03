@@ -1,6 +1,8 @@
 import { Component, OnInit, OpaqueToken, Inject } from '@angular/core';
 import { Software, deleteSoftwareFromArray } from './software';
 import { SoftwareDataService } from './software-data-service';
+import { PurchaseService } from '../purchases/purchase.service';
+import { Purchase } from '../purchases/purchase';
 import { MdlDialogReference } from 'angular2-mdl';
 
 export const SOFTWARE_PROPS = new OpaqueToken('tmp value');
@@ -17,6 +19,7 @@ export class SoftwareInfoComponent {
 	constructor(
 		private dialog: MdlDialogReference,
 		private softwareDataService: SoftwareDataService,
+		private purhcaseDataService: PurchaseService,
 		@Inject(SOFTWARE_PROPS) software: Software) {
 		this.software = software;
 	}
@@ -33,6 +36,23 @@ export class SoftwareInfoComponent {
 									soft  => {console.log("Deleted "+soft); this.dialog.hide()},
 									error => this.errorMsg = <any>error
 									);
+	}
+
+	purchaseSoftware(software: Software) {
+		let purchase = new Purchase(
+			software._id,
+			123,
+			"111",
+			[]
+		);
+		this.purhcaseDataService.addPurchase(purchase)
+			.subscribe(
+				purchase => {
+					console.log("Hey Hey!");
+					this.dialog.hide();
+				},
+				error 	 => console.log("Error: "+<any>error)
+				);
 	}
 }
 

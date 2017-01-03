@@ -37,9 +37,10 @@ export class Purchases {
 	}
 
 	getPurchases() {
+		console.log("sdljfhsdjklfhsdk");
 		this.purchaseService.getPurchases()
 						.subscribe(
-							purchases 	=> this.purchases = purchases,
+							purchases 	=> {console.log(this.purchases);this.purchases = purchases;},
 							error 		=> this.erroMsg = <any>error);
 		console.log(this.purchases);
 		console.log(this.erroMsg);
