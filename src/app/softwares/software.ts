@@ -1,6 +1,6 @@
 export class Software {
 	constructor(
-			public softwareId: number,
+			public softwareId: any,
 			public softwareName: string,
 			public publisherName: string,
 			public licenceCost: number,

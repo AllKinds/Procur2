@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
-import { Purchase, totalAmount, deletePurchaseFromArray } from './purchase';
+import { Purchase, totalAmount, deletePurchaseFromArray, updatePurchaseFromArray } from './purchase';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -61,8 +61,8 @@ export class PurchaseService {
 		return this.http.put(`${this.purchaseUrl}/${purchaseId}/newYear`, {"amountByYear": yearlyAmount})
 						.map((res: Response) => {
 							console.log("Year Added");
-							let purchase = this.extractData(res);
-							this.purchases.push(purchase);
+							let updatedPurchase = this.extractData(res);
+							updatePurchaseFromArray(this.purchases, purchaseId, updatedPurchase);
 						})
 						.catch(this.handleError);
 	}

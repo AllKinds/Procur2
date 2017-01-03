@@ -47,7 +47,7 @@ export class Purchases {
 
 	validOnSearch(purchase: Purchase): boolean {
 		return (!this.searchInput) ||
-		 purchase.softwareId.toString().includes(	this.searchInput.toLowerCase() ) ||
+		 // purchase.softwareId.toString().includes(	this.searchInput.toLowerCase() ) ||
 		 purchase.unitId.toString().includes(		this.searchInput.toLowerCase() ) ||
 		 purchase.subUnit.toLowerCase().includes(	this.searchInput.toLowerCase() );
 	}
@@ -66,7 +66,7 @@ export class Purchases {
 	}
 	tempAddPurchase(){
 		let purchase = new Purchase(
-			11,
+			"586a0877aeb9d22d00d973b4",
 			12,
 			"subUnit",
 			[]

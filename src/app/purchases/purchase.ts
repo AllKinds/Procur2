@@ -5,7 +5,7 @@ export class AmountByYear {
 
 export class Purchase {
 	constructor(
-		public softwareId: number,
+		public software: any,
 		public unitId: number,
 		public subUnit: string,
 		public amounts: AmountByYear[],
@@ -26,6 +26,15 @@ export function deletePurchaseFromArray(purchase: Purchase[], id: string) {
 		if(purchase[i]._id == id){
 			purchase.splice(i,1);
 			return 1;
+		}
+	}
+	return -1;
+}
+
+export function updatePurchaseFromArray(purchase: Purchase[], id: string, updatedPurchase: Purchase) {
+	for(let i=0; i<purchase.length; i++){
+		if(purchase[i]._id == id){
+			purchase[i].amounts = updatedPurchase.amounts;
 		}
 	}
 	return -1;
