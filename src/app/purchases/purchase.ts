@@ -6,8 +6,7 @@ export class AmountByYear {
 export class Purchase {
 	constructor(
 		public software: any,
-		public unitId: number,
-		public subUnit: string,
+		public unit: any,
 		public amounts: AmountByYear[],
 		public _id?: string
 	) {}

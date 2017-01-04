@@ -1,5 +1,6 @@
 import { Component } 		   from '@angular/core';
 import { Purchase, totalAmount }   		   from './purchase';
+// import { Unit } from '../units/unit';
 // import { PurchaseDataService } from '../data/purchase-data-service';
 import { PurchaseService } from './purchase.service';
 
@@ -49,8 +50,8 @@ export class Purchases {
 	validOnSearch(purchase: Purchase): boolean {
 		return (!this.searchInput) ||
 		 // purchase.softwareId.toString().includes(	this.searchInput.toLowerCase() ) ||
-		 purchase.unitId.toString().includes(		this.searchInput.toLowerCase() ) ||
-		 purchase.subUnit.toLowerCase().includes(	this.searchInput.toLowerCase() );
+		 purchase.unit.unitId.toString().includes(		this.searchInput.toLowerCase() ) ||
+		 purchase.unit.subUnit.toLowerCase().includes(	this.searchInput.toLowerCase() );
 	}
 
 	showPurchaseInfo($event, index, purchase: Purchase) {
@@ -68,8 +69,7 @@ export class Purchases {
 	tempAddPurchase(){
 		let purchase = new Purchase(
 			"586a0877aeb9d22d00d973b4",
-			12,
-			"subUnit",
+			"586c9d4ea31bdc0957621782",
 			[]
 		);
 		this.addPurchase(purchase);

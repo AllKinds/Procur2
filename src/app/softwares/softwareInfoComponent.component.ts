@@ -41,8 +41,7 @@ export class SoftwareInfoComponent {
 	purchaseSoftware(software: Software) {
 		let purchase = new Purchase(
 			software._id,
-			123,
-			"111",
+			"586c9d4ea31bdc0957621782",
 			[]
 		);
 		this.purhcaseDataService.addPurchase(purchase)
