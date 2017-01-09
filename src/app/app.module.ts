@@ -19,6 +19,7 @@ import { MdlDialogService,  } from 'angular2-mdl';
 
 import { RouterModule } from '@angular/router';
 import { LoginModule } from './softwares/newSoftware/login.module';
+import { AppRoutingModule } from './app-routing.module';
 
 // import { LoginDialogComponent } from './softwares/newSoftware/login-dialog.component';
 import { DialogDemo } from './softwares/newSoftware/dialog.component';
@@ -54,7 +55,8 @@ import { DialogDemo } from './softwares/newSoftware/dialog.component';
     // Mine
     MdlModule,
     ReactiveFormsModule,
-    LoginModule
+    LoginModule,
+    AppRoutingModule
   ],
   providers: [
     SoftwareDataService,

@@ -1,5 +1,33 @@
 <div class="demo-container" mdl-shadow="2">
-   <mdl-layout mdl-layout-fixed-header mdl-layout-tab-active-index="0" (mdl-layout-tab-active-changed)="tabChanged($event)">
+   <mdl-layout mdl-layout-fixed-header mdl-layout-header-seamed>
+      <mdl-layout-header>
+         <mdl-layout-header-row>
+            <mdl-layout-title>Title</mdl-layout-title>
+            <mdl-layout-spacer></mdl-layout-spacer>
+            <!-- Navigation. We hide it in small screens. -->
+            <nav class="mdl-navigation mdl-layout--large-screen-only">
+               <a class="mdl-navigation__link" [routerLink]="['/softwares']">Softwares</a>
+               <a class="mdl-navigation__link" [routerLink]="['/purchases']">Purchases</a>
+               <a class="mdl-navigation__link" [routerLink]="['/unitsMgmnt']">Units</a>
+            </nav>
+         </mdl-layout-header-row>
+      </mdl-layout-header>
+      <mdl-layout-drawer>
+         <mdl-layout-title>Title</mdl-layout-title>
+         <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" [routerLink]="['/softwares']">Softwares</a>
+            <a class="mdl-navigation__link" [routerLink]="['/purchases']">Purchases</a>
+            <a class="mdl-navigation__link" [routerLink]="['/unitsMgmnt']">Units</a>
+         </nav>
+      </mdl-layout-drawer>
+      <mdl-layout-content>
+        <router-outlet> </router-outlet> 
+      </mdl-layout-content>
+   </mdl-layout>
+
+
+
+<!--    <mdl-layout mdl-layout-fixed-header mdl-layout-tab-active-index="0" (mdl-layout-tab-active-changed)="tabChanged($event)">
       <mdl-layout-header>
          <mdl-layout-header-row>
             <mdl-layout-title>{{title}}</mdl-layout-title>
@@ -20,7 +48,7 @@
 						<softwaresTab> </softwaresTab>
 					</mdl-tab-panel-content>
          </mdl-layout-tab-panel>
-         <mdl-layout-tab-panel mdl-layout-tab-panel-title="Purchases">
+         <mdl-layout-tab-panel mdl-layout-tab-panel-title="Purchases" (click)="goto("purchases")">
                <h1>
                  Purchases
                </h1>
@@ -32,6 +60,12 @@
             </h1>
             <units-tab> </units-tab>
          </mdl-layout-tab-panel>
+         <router-outlet> </router-outlet> 
       </mdl-layout-content>
-   </mdl-layout>
+   </mdl-layout> -->
 </div>
+
+<!-- 
+<a class="mdl-navigation__link" [routerLink]="['/softwares']">Softwares</a>
+<a class="mdl-navigation__link" [routerLink]="['/purchases']">Purchases</a>
+<a class="mdl-navigation__link" [routerLink]="['/unitsMgmnt']">Units</a> -->

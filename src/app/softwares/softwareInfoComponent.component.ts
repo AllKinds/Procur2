@@ -33,9 +33,17 @@ export class SoftwareInfoComponent {
 		// Add "R U sure??"
 		this.softwareDataService.deleteSoftware(software._id)
 								.subscribe(
-									soft  => {console.log("Deleted "+soft); this.dialog.hide()},
+									soft  => {console.log("Deleted "+soft); this.deletePurchasesOfSoftware(software._id); this.dialog.hide()},
 									error => this.errorMsg = <any>error
 									);
+	}
+
+	deletePurchasesOfSoftware (software_id: string) {
+		this.purhcaseDataService.deletePurchasesBySoftware(software_id)
+			.subscribe(
+				res => console.log(res),
+				error => this.errorMsg = <any>error 
+			);
 	}
 
 	purchaseSoftware(software: Software) {
