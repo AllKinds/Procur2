@@ -1,16 +1,12 @@
 import { Component, ViewChild, OnInit} from '@angular/core';
 import { Unit } from './unit';
 import { UnitService } from './unit.service';
+import { PurchaseService } from '../purchases/purchase.service';
 
 import {
 	MdlDialogService,
 	MdlDialogReference
 } from 'angular2-mdl';
-
-// import {
-// 	PurchaseInfoComponent,
-// 	PURCHASE_PROPS
-// } from './purchaseInfoComponent.component'
 
 @Component ({
 	selector: 'units-tab',
@@ -27,6 +23,7 @@ export class UnitsMgmnt {
 
 	constructor(
 		private unitService: UnitService,
+		private purhcaseDataService: PurchaseService,
 		private dialogService: MdlDialogService,
 	) {}
 
@@ -49,18 +46,6 @@ export class UnitsMgmnt {
 		 unit.subUnit.toLowerCase().includes(	this.searchInput.toLowerCase() );
 	}
 
-	// showPurchaseInfo($event, index, purchase: Purchase) {
-	// 	let pDialog = this.dialogService.showCustomDialog({
-	// 		component: PurchaseInfoComponent,
-	// 		providers: [{provide: PURCHASE_PROPS, useValue: purchase}],
-	// 		styles: {'width': '500px', 'overflow-y': 'auto', 'max-height': '90%'},
-	// 		isModal: true,
-	// 		clickOutsideToClose: true,
-	// 	})
-	// 	pDialog.subscribe( (dialogReference: MdlDialogReference) => {
-	// 		console.log('info dialog is visible', dialogReference );
-	// 	});
-	// }
 	tempAddUnit(){
 		let unit = new Unit(
 			this.unitId,
@@ -81,8 +66,16 @@ export class UnitsMgmnt {
 	deleteUnit(unit: Unit) {
 		this.unitService.deleteUnit(unit._id)
 								.subscribe(
-									unit  => console.log("Deleted "+unit),
+									unit_id  => {console.log("Res is "+unit_id); this.deletePurchasesByUnit(unit_id)},
 									error => console.log("Error: "+<any>error)
 									);
+	}
+
+	deletePurchasesByUnit (unit_id: string) {
+		this.purhcaseDataService.deletePurchasesByUnit(unit_id)
+			.subscribe(
+				res => console.log(res),
+				error => console.log("Error: "+<any>error)
+			);
 	}
 }

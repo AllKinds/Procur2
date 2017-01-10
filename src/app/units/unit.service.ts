@@ -41,6 +41,7 @@ export class UnitService {
 						.map((res: Response) => {
 							let unit_id = this.extractData(res);
 							deleteUnitFromArray(this.units, unit_id);
+							return unit_id;
 						})
 						.catch(this.handleError);
 	}

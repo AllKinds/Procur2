@@ -54,6 +54,15 @@ export class PurchaseService {
 						.catch(this.handleError);
 	}
 
+	deletePurchasesByUnit(unit_id: string){
+		return this.http.delete(`${this.purchasesUrl}/byUnit/${unit_id}`)
+						.map((res: Response) => {
+							let statuse = this.extractData(res);
+							console.log(status);
+						})
+						.catch(this.handleError);
+	}
+
 	checkThis () {
 		let purchaseId = "585a72d3b3b63b65ea7bc6f3";
 		let yearlyAmount = {"year": 1, "amount": 1};

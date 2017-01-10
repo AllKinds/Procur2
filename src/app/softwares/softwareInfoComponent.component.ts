@@ -49,7 +49,7 @@ export class SoftwareInfoComponent {
 	purchaseSoftware(software: Software) {
 		let purchase = new Purchase(
 			software._id,
-			"586c9d4ea31bdc0957621782",
+			"5874c971a3df914eec7b33df",
 			[]
 		);
 		this.purhcaseDataService.addPurchase(purchase)
