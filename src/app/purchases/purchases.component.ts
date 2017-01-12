@@ -2,7 +2,9 @@ import { Component } 		   from '@angular/core';
 import { Purchase, totalAmount }   		   from './purchase';
 // import { Unit } from '../units/unit';
 // import { PurchaseDataService } from '../data/purchase-data-service';
-import { PurchaseService } from './purchase.service';
+import { PurchaseService } 	from './purchase.service';
+import { UserService } 		from '../users/user.service';
+import { User }				from '../users/user';
 
 import {
 	MdlDialogService,
@@ -25,26 +27,45 @@ export class Purchases {
 	private searchInput="";
 	public calcTotalAmount = totalAmount;
 	public erroMsg: string;
+	user: User;
 
 	constructor(
-		// private purchaseDataService: PurchaseDataService,
-		private purchaseService: PurchaseService,
-		private dialogService: MdlDialogService,
-		// private dialog: MdlDialogReference
+		private purchaseService: 	PurchaseService,
+		private userService: 		UserService,
+		private dialogService: 		MdlDialogService,
 	) {}
 
 	public ngOnInit() {
+	  this.getMyUser();
 	  this.getPurchases();
+	  this.user = this.userService.user;
+	  
+	}
+
+	getMyUser() {
+		this.userService.getUser()
+						.subscribe(
+							user => this.user = user,
+							error => this.erroMsg = <any>error
+						);
 	}
 
 	getPurchases() {
-		console.log("sdljfhsdjklfhsdk");
-		this.purchaseService.getPurchases()
-						.subscribe(
-							purchases 	=> {console.log(this.purchases);this.purchases = purchases;},
-							error 		=> this.erroMsg = <any>error);
-		console.log(this.purchases);
-		console.log(this.erroMsg);
+		if(!this.user){
+			this.getMyUser();
+		}
+		if(this.user.permission in ['Admin', 'Manager']){
+			this.purchaseService.getPurchases()
+								.subscribe(
+									purchases 	=> this.purchases = purchases,
+									error 		=> this.erroMsg = <any>error);
+		}
+		else if(this.user.permission == 'Unit'){
+			this.purchaseService.getPurchasesByUnit(this.user.unitId)
+								.subscribe(
+									purchases 	=> this.purchases = purchases,
+									error 		=> this.erroMsg = <any>error);
+		}
 	}
 
 	validOnSearch(purchase: Purchase): boolean {

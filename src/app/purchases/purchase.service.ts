@@ -24,6 +24,15 @@ export class PurchaseService {
 						.catch(this.handleError);
 	}
 
+	getPurchasesByUnit(unit_id: string): Observable<Purchase[]> {
+		return this.http.get(this.purchasesUrl+'/byUnit/'+unit_id)
+						.map((res: Response) => {
+							let prcs = this.extractData(res);
+							this.purchases = prcs;
+						})
+						.catch(this.handleError);
+	}
+
 	addPurchase(purchase: Purchase): Observable<Purchase> {
 		return this.http.post(this.purchaseUrl, purchase)
 						.map((res: Response) => {

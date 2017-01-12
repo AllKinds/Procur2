@@ -5,24 +5,30 @@ import { HttpModule, JsonpModule } from '@angular/http';
 // Mine:
 import { MdlModule } from 'angular2-mdl';
 // Components
-import { AppComponent } from './app.component';
-import { Softwares } from './softwares/softwares.component';
-import { UnitsMgmnt } from './units/units.component';
-import { ReactiveFormsDemo } from './softwares/reactiveForm/reactiveform.component';
-import { SoftwareInfoComponent } from './softwares/softwareInfoComponent.component';
+import { AppComponent }             from './app.component';
+import { Softwares }                from './softwares/softwares.component';
+// import { UnitsMgmnt }               from './units/units.component';
+import { ReactiveFormsDemo }        from './softwares/reactiveForm/reactiveform.component';
+import { SoftwareInfoComponent }    from './softwares/softwareInfoComponent.component';
+import { LoginComponent }           from './login/login.component';
+import { PageNotFoundComponent }    from './notFound.component';
 // import { DialogDemo } from './softwares/newSoftware/newSoftware.component';
 // Services
-import { SoftwareDataService } from './softwares/software-data-service';
-import { PurchaseService } from './purchases/purchase.service';
-import { UnitService } from './units/unit.service';
-import { MdlDialogService,  } from 'angular2-mdl';
+import { SoftwareDataService }     from './softwares/software-data-service';
+import { PurchaseService }         from './purchases/purchase.service';
+import { UserService }             from './users/user.service';
+// import { UnitService }             from './units/unit.service';
+import { MdlDialogService,  }      from 'angular2-mdl';
 
-import { RouterModule } from '@angular/router';
-import { LoginModule } from './softwares/newSoftware/login.module';
-import { AppRoutingModule } from './app-routing.module';
+import { RouterModule }            from '@angular/router';
+// import { LoginModule } from './softwares/newSoftware/login.module';
+import { AppRoutingModule }        from './app-routing.module';
+import { LoginRoutingModule }      from './login/login.module';
+import { UnitsModule }             from './units/units.module';
+// import { UserModule }              from './users/users.module';
 
 // import { LoginDialogComponent } from './softwares/newSoftware/login-dialog.component';
-import { DialogDemo } from './softwares/newSoftware/dialog.component';
+import { DialogDemo }              from './softwares/newSoftware/dialog.component';
 // import { NewSoftwareDialog } from  './softwares/newSoftware/newSoftwareDialog.component';
 
 
@@ -38,12 +44,12 @@ import { DialogDemo } from './softwares/newSoftware/dialog.component';
     AppComponent,
     Softwares,
     Purchases,
-    UnitsMgmnt,
     ReactiveFormsDemo,
     DialogDemo,
     SoftwareInfoComponent,
-    PurchaseInfoComponent
-    // LoginDialogComponent
+    PurchaseInfoComponent,
+    LoginComponent,
+    PageNotFoundComponent
   ],
   entryComponents: [ SoftwareInfoComponent, PurchaseInfoComponent ],
   imports: [
@@ -55,14 +61,15 @@ import { DialogDemo } from './softwares/newSoftware/dialog.component';
     // Mine
     MdlModule,
     ReactiveFormsModule,
-    LoginModule,
-    AppRoutingModule
+    LoginRoutingModule,
+    AppRoutingModule,
+    UnitsModule,
+    // UserModule
   ],
   providers: [
     SoftwareDataService,
-    // PurchaseDataService,
     PurchaseService,
-    UnitService,
+    UserService,
     MdlDialogService,
   ],
   bootstrap: [AppComponent]

@@ -6,6 +6,9 @@ import {
 
 import { Router } from '@angular/router';
 
+import { UserGuard } from './user-guard.service';
+import { UserService } from './users/user.service';
+
 // Add the RxJS Observable operators.
 import './rxjs-operators';
 
@@ -17,10 +20,30 @@ import './rxjs-operators';
 export class AppComponent {
   title = 'Procurement';
   dialogService: MdlDialogService;
+  user: any;
 
   constructor(
-    private router: Router
+    private router: Router,
+    private userService: UserService
+    private userGService: UserGuard
    ){}
+
+  ngOnInit() {
+    // this.updateUser();
+    this.getMyUser();
+  }
+
+  getMyUser() {
+   this.userService.getUser()
+                   .subscribe(
+                      user => this.user = user,
+                      error => this.erroMsg = <any>error
+                    );
+  }
+
+  updateUser() {
+    this.user = this.userGService.getUser();
+  }
 
   tabChanged($event) {
   	// TODO funtion

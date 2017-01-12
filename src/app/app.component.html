@@ -6,9 +6,22 @@
             <mdl-layout-spacer></mdl-layout-spacer>
             <!-- Navigation. We hide it in small screens. -->
             <nav class="mdl-navigation mdl-layout--large-screen-only">
-               <a class="mdl-navigation__link" [routerLink]="['/softwares']">Softwares</a>
-               <a class="mdl-navigation__link" [routerLink]="['/purchases']">Purchases</a>
-               <a class="mdl-navigation__link" [routerLink]="['/unitsMgmnt']">Units</a>
+               <a 
+                  class="mdl-navigation__link" 
+                  routerLink='/softwares' 
+                  routerLinkActive="active" 
+               >Softwares</a>
+               <a *ngIf="this.user && this.user.permission!='Basic'"
+                  class="mdl-navigation__link" 
+                  routerLink='/purchases' 
+                  routerLinkActive="active" 
+               >Purchases</a>
+               <a *ngIf="this.user && this.user.permission=='Admin'"
+                  class="mdl-navigation__link" 
+                  routerLink='/units'     
+                  routerLinkActive="active" 
+               >Units</a>
+               <p *ngIf="this.user">Welcome {{this.user.name}}</p>
             </nav>
          </mdl-layout-header-row>
       </mdl-layout-header>
@@ -17,55 +30,12 @@
          <nav class="mdl-navigation">
             <a class="mdl-navigation__link" [routerLink]="['/softwares']">Softwares</a>
             <a class="mdl-navigation__link" [routerLink]="['/purchases']">Purchases</a>
-            <a class="mdl-navigation__link" [routerLink]="['/unitsMgmnt']">Units</a>
+            <a class="mdl-navigation__link" [routerLink]="['/units']">Units</a>
          </nav>
       </mdl-layout-drawer>
       <mdl-layout-content>
+         <button (click)="updateUser()">Click Me</button>
         <router-outlet> </router-outlet> 
       </mdl-layout-content>
    </mdl-layout>
-
-
-
-<!--    <mdl-layout mdl-layout-fixed-header mdl-layout-tab-active-index="0" (mdl-layout-tab-active-changed)="tabChanged($event)">
-      <mdl-layout-header>
-         <mdl-layout-header-row>
-            <mdl-layout-title>{{title}}</mdl-layout-title>
-         </mdl-layout-header-row>
-      </mdl-layout-header>
-      <mdl-layout-drawer>
-         <mdl-layout-title>Title</mdl-layout-title>
-      </mdl-layout-drawer>
-      <mdl-layout-content>
-         <mdl-layout-tab-panel>
-					<mdl-tab-panel-title>
-						<mdl-icon class="mdl-color-text--primary">person</mdl-icon><span>Softwares</span>
-					</mdl-tab-panel-title>
-					<mdl-tab-panel-content>
-						<h1>
-						  Softwares
-						</h1>
-						<softwaresTab> </softwaresTab>
-					</mdl-tab-panel-content>
-         </mdl-layout-tab-panel>
-         <mdl-layout-tab-panel mdl-layout-tab-panel-title="Purchases" (click)="goto("purchases")">
-               <h1>
-                 Purchases
-               </h1>
-               <purchases-tab> </purchases-tab>
-         </mdl-layout-tab-panel>
-         <mdl-layout-tab-panel mdl-layout-tab-panel-title="Units">
-            <h1>
-              Unit Manager
-            </h1>
-            <units-tab> </units-tab>
-         </mdl-layout-tab-panel>
-         <router-outlet> </router-outlet> 
-      </mdl-layout-content>
-   </mdl-layout> -->
 </div>
-
-<!-- 
-<a class="mdl-navigation__link" [routerLink]="['/softwares']">Softwares</a>
-<a class="mdl-navigation__link" [routerLink]="['/purchases']">Purchases</a>
-<a class="mdl-navigation__link" [routerLink]="['/unitsMgmnt']">Units</a> -->

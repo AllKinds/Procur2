@@ -3,10 +3,10 @@ import { Unit } from './unit';
 import { UnitService } from './unit.service';
 import { PurchaseService } from '../purchases/purchase.service';
 
-import {
-	MdlDialogService,
-	MdlDialogReference
-} from 'angular2-mdl';
+// import {
+// 	MdlDialogService,
+// 	MdlDialogReference
+// } from 'angular2-mdl';
 
 @Component ({
 	selector: 'units-tab',
@@ -24,7 +24,7 @@ export class UnitsMgmnt {
 	constructor(
 		private unitService: UnitService,
 		private purhcaseDataService: PurchaseService,
-		private dialogService: MdlDialogService,
+		// private dialogService: MdlDialogService,
 	) {}
 
 	public ngOnInit() {

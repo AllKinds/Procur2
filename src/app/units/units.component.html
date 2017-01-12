@@ -1,27 +1,5 @@
 <div id='units-div' class="tab-view">
 	<mdl-textfield id="unit-search" type="text" label="Search..." [(ngModel)]="searchInput" floating-label></mdl-textfield>
-
-<!-- 	<table id="units-table" *ngIf="unitService.units" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
-	  <thead>
-	    <tr>
-	      <th class="mdl-data-table__cell--non-numeric">Unit Id</th>
-	      <th class="mdl-data-table__cell--non-numeric">Sub Unit</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <template 
-	    ngFor let-unit [ngForOf]="unitService.units" 
-	    let i = index>
-	      <tr 
-	      *ngIf="validOnSearch(unit)"
-	      >
-	          <td class="mdl-data-table__cell--non-numeric" > {{ unit.unitId }} </td>
-	          <td class="mdl-data-table__cell--non-numeric" > {{ unit.subUnit }} </td>
-	      </tr>
-	    </template>
-	  </tbody>
-	</table> -->
-	
 	<mdl-list *ngIf="unitService.units">
 		<template 
 		ngFor let-unit [ngForOf]="unitService.units" 
@@ -53,10 +31,10 @@
         label="Sub Unit"
         floating-label
         [(ngModel)]="subUnit"></mdl-textfield>
-
-	<!-- Temp -->
 	
    </div> 
+
+   
    <button (click)="tempAddUnit()" mdl-button mdl-button-type="fab" mdl-colored="primary" mdl-ripple>
 	    <mdl-icon>add</mdl-icon>
 	 </button>
