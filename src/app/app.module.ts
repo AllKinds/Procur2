@@ -16,7 +16,7 @@ import { PageNotFoundComponent }    from './notFound.component';
 // Services
 import { SoftwareDataService }     from './softwares/software-data-service';
 import { PurchaseService }         from './purchases/purchase.service';
-import { UserService }             from './users/user.service';
+// import { UserService }             from './users/user.service';
 // import { UnitService }             from './units/unit.service';
 import { MdlDialogService,  }      from 'angular2-mdl';
 
@@ -69,7 +69,7 @@ import { DialogDemo }              from './softwares/newSoftware/dialog.componen
   providers: [
     SoftwareDataService,
     PurchaseService,
-    UserService,
+    // UserService,
     MdlDialogService,
   ],
   bootstrap: [AppComponent]

@@ -7,7 +7,7 @@ import {
 import { Router } from '@angular/router';
 
 import { UserGuard } from './user-guard.service';
-import { UserService } from './users/user.service';
+import { AuthService } from './auth.service';
 
 // Add the RxJS Observable operators.
 import './rxjs-operators';
@@ -24,25 +24,27 @@ export class AppComponent {
 
   constructor(
     private router: Router,
-    private userService: UserService
-    private userGService: UserGuard
+    // private userService: UserService
+    private userService: AuthService
    ){}
 
   ngOnInit() {
     // this.updateUser();
     this.getMyUser();
+    this.user = this.userService.user;
   }
 
   getMyUser() {
    this.userService.getUser()
                    .subscribe(
-                      user => this.user = user,
-                      error => this.erroMsg = <any>error
+                      user => this.updateUser(),
+                      error => console.log(error)
                     );
   }
 
+
   updateUser() {
-    this.user = this.userGService.getUser();
+    this.user = this.userService.user;
   }
 
   tabChanged($event) {

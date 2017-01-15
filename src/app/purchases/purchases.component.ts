@@ -3,7 +3,7 @@ import { Purchase, totalAmount }   		   from './purchase';
 // import { Unit } from '../units/unit';
 // import { PurchaseDataService } from '../data/purchase-data-service';
 import { PurchaseService } 	from './purchase.service';
-import { UserService } 		from '../users/user.service';
+import { AuthService } 		from '../auth.service';
 import { User }				from '../users/user';
 
 import {
@@ -31,14 +31,16 @@ export class Purchases {
 
 	constructor(
 		private purchaseService: 	PurchaseService,
-		private userService: 		UserService,
+		private userService: 		AuthService,
 		private dialogService: 		MdlDialogService,
 	) {}
 
 	public ngOnInit() {
-	  this.getMyUser();
-	  this.getPurchases();
-	  this.user = this.userService.user;
+		this.user = this.userService.user;
+		this.getPurchases();
+	  // this.getMyUser();
+	  // this.getPurchases();
+	  
 	  
 	}
 
@@ -54,7 +56,7 @@ export class Purchases {
 		if(!this.user){
 			this.getMyUser();
 		}
-		if(this.user.permission in ['Admin', 'Manager']){
+		if(['Admin', 'Manager'].indexOf(this.user.permission) > -1){
 			this.purchaseService.getPurchases()
 								.subscribe(
 									purchases 	=> this.purchases = purchases,

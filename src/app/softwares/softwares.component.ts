@@ -1,6 +1,11 @@
 import { Component, ViewChild, OnInit} from '@angular/core';
+
 import { Software } from './software';
+import { User }		from '../users/user';
+
 import { SoftwareDataService } from './software-data-service';
+import { AuthService } 		   from '../auth.service';
+
 
 import {
   IMdlTableModelItem,
@@ -31,11 +36,13 @@ export class Softwares implements OnInit{
 	public errorMessage: string;
 	constructor(
 		private softwareDataService: SoftwareDataService,
-		private dialogService: MdlDialogService
+		private dialogService: 		 MdlDialogService,
+		private userService: 		 AuthService,
 	) {}
 
 
 	public ngOnInit() {
+	  this.user = this.userService.user;
 	  this.getSoftwares();
 	}
 
