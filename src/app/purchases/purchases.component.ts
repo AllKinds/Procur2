@@ -37,11 +37,7 @@ export class Purchases {
 
 	public ngOnInit() {
 		this.user = this.userService.user;
-		this.getPurchases();
-	  // this.getMyUser();
-	  // this.getPurchases();
-	  
-	  
+		this.getPurchases();	  
 	}
 
 	getMyUser() {
@@ -71,6 +67,11 @@ export class Purchases {
 	}
 
 	validOnSearch(purchase: Purchase): boolean {
+		if(!this.searchInput) {
+			for(let i=0; i<purchase.length; i++) {
+				console.log(purchase[i]);
+			}
+		}
 		return (!this.searchInput) ||
 		 // purchase.softwareId.toString().includes(	this.searchInput.toLowerCase() ) ||
 		 purchase.unit.unitId.toString().includes(		this.searchInput.toLowerCase() ) ||

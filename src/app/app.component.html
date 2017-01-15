@@ -2,7 +2,7 @@
    <mdl-layout mdl-layout-fixed-header mdl-layout-header-seamed>
       <mdl-layout-header>
          <mdl-layout-header-row>
-            <mdl-layout-title>Title</mdl-layout-title>
+            <mdl-layout-title>Procurement</mdl-layout-title>
             <mdl-layout-spacer></mdl-layout-spacer>
             <!-- Navigation. We hide it in small screens. -->
             <nav class="mdl-navigation mdl-layout--large-screen-only">
@@ -21,12 +21,12 @@
                   routerLink='/units'     
                   routerLinkActive="active" 
                >Units</a>
-               <p *ngIf="this.user">Welcome {{this.user.name}}</p>
+               <p id="welcome-title" *ngIf="this.user">Welcome {{this.user.name}}</p>
             </nav>
          </mdl-layout-header-row>
       </mdl-layout-header>
       <mdl-layout-drawer>
-         <mdl-layout-title>Title</mdl-layout-title>
+         <mdl-layout-title>Procurement</mdl-layout-title>
          <nav class="mdl-navigation">
             <a class="mdl-navigation__link" [routerLink]="['/softwares']">Softwares</a>
             <a class="mdl-navigation__link" [routerLink]="['/purchases']">Purchases</a>
@@ -34,7 +34,6 @@
          </nav>
       </mdl-layout-drawer>
       <mdl-layout-content>
-         <button (click)="updateUser()">Click Me</button>
         <router-outlet> </router-outlet> 
       </mdl-layout-content>
    </mdl-layout>

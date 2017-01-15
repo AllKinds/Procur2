@@ -19,7 +19,10 @@
 	    </template>
   </mdl-list>
  
-  <div class="quick-add">
+  <mdl-card mdl-shadow="2" class="quick-add">
+	<mdl-card-title>
+      <h2 mdl-card-title-text>New Unit</h2>
+    </mdl-card-title>
    	<mdl-textfield
         type="text"
         label="Unit"
@@ -31,11 +34,13 @@
         label="Sub Unit"
         floating-label
         [(ngModel)]="subUnit"></mdl-textfield>
-	
-   </div> 
+	<br>
+	<button (click)="tempAddUnit()" mdl-button mdl-button-type="fab" mdl-colored="primary" mdl-ripple>
+	    <mdl-icon>add</mdl-icon>
+	</button>
+
+   </mdl-card> 
 
    
-   <button (click)="tempAddUnit()" mdl-button mdl-button-type="fab" mdl-colored="primary" mdl-ripple>
-	    <mdl-icon>add</mdl-icon>
-	 </button>
+   
 </div>

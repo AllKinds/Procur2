@@ -45,6 +45,7 @@ export class Softwares implements OnInit{
 
 	public ngOnInit() {
 	  this.user = this.userService.user;
+	  console.log(this.user);
 	  this.getSoftwares();
 	}
 

@@ -29,10 +29,11 @@
   </table>
 
   <!-- <dialog-demo (newSoftware)='onCreateNewSoftware($event)'></dialog-demo> -->
-  <button
-          mdl-button
-          mdl-button-type="raised"
-          mdl-colored="primary"
-          mdl-ripple
-          (click)="showDialog($event)">Add a Software</button>
+  <button class = add-button
+    *ngIf="user.permission  == 'Manager' || user.permission  == 'Admin'"
+    mdl-button 
+    mdl-button-type="fab" 
+    mdl-colored="primary" 
+    mdl-ripple
+    (click)="showDialog($event)"><mdl-icon>add</mdl-icon></button>
 </div>

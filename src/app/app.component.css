@@ -1,0 +1,16 @@
+#welcome-title {
+	margin: 0;
+	margin-left: 20px;
+	font-size: 20px;
+	color: #FCF7E2;
+}
+
+table {
+	width: 100%;
+	margin-top: 2%;
+}
+.add-button {
+	position: absolute;
+	right: 5%;
+	bottom: 5%;
+}
