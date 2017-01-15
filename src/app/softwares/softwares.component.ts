@@ -1,4 +1,5 @@
 import { Component, ViewChild, OnInit} from '@angular/core';
+import { NewSoftwareDialog } from  './newSoftware/newSoftwareDialog.component';
 
 import { Software } from './software';
 import { User }		from '../users/user';
@@ -34,6 +35,7 @@ export class Softwares implements OnInit{
 	public mode= 'Observable';
 	public searchInput="";
 	public errorMessage: string;
+	private user: User;
 	constructor(
 		private softwareDataService: SoftwareDataService,
 		private dialogService: 		 MdlDialogService,
@@ -101,4 +103,23 @@ export class Softwares implements OnInit{
 		this.addSoftware(newSoftware);
 	}
 
+	public showDialog($event: MouseEvent) {
+
+	  let pDialog = this.dialogService.showCustomDialog({
+	    component: NewSoftwareDialog,
+	    providers: [],
+	    isModal: true,
+	    styles: {'width': '300px'},
+	    clickOutsideToClose: true,
+	    openFrom: $event,
+	    enterTransitionDuration: 400,
+	    leaveTransitionDuration: 400
+	  });
+	  pDialog.subscribe( (dialogReference: MdlDialogReference) => {
+	    console.log('dialog visible', dialogReference);
+	  });
+	  pDialog.subscribe( () => console.log('alert closed') );
+
+
+	}
 }

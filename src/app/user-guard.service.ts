@@ -12,11 +12,13 @@ export class UserGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     let url: string = state.url;
-
+    if(url.search('/units') == 0) {
+      return this.checkAdminPermission(url);
+    }
     return this.checkBasicPermission(url);
   }
 
-  checkPermission(url: string): boolean {
+  checkAdminPermission(url: string): boolean {
     if(this.authService.isAdmin()) {return true;}
     console.log("You Are Not Allowed HERE!");
     return false;

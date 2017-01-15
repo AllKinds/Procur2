@@ -1,8 +1,13 @@
 import { Component, OnInit, OpaqueToken, Inject } from '@angular/core';
+
 import { Software, deleteSoftwareFromArray } from './software';
+import { User } 							 from '../users/user';
+import { Purchase } 						 from '../purchases/purchase';
+
 import { SoftwareDataService } from './software-data-service';
 import { PurchaseService } from '../purchases/purchase.service';
-import { Purchase } from '../purchases/purchase';
+import { AuthService } 		   from '../auth.service';
+
 import { MdlDialogReference } from 'angular2-mdl';
 
 export const SOFTWARE_PROPS = new OpaqueToken('tmp value');
@@ -15,18 +20,20 @@ export class SoftwareInfoComponent {
 
 	errorMsg: string;
 	public software: Software;
+	user: User;
 
 	constructor(
 		private dialog: MdlDialogReference,
 		private softwareDataService: SoftwareDataService,
 		private purhcaseDataService: PurchaseService,
+		private userService: 		 AuthService,
 		@Inject(SOFTWARE_PROPS) software: Software) {
 		this.software = software;
 	}
-
+	OnInit() {
+		this.user = this.userService.user;
+	}
 	onDelete(software: Software){
-		// let id = this.softwareDataService.deleteSoftware(software);
-		// console.log("Software "+id+" was deleted");
 		this.deleteSoftware(software);
 	}
 	deleteSoftware (software: Software){
@@ -47,9 +54,10 @@ export class SoftwareInfoComponent {
 	}
 
 	purchaseSoftware(software: Software) {
+		let unitId = this.user ? this.user.unitId: '5874cc65171f055952ada0c3'
 		let purchase = new Purchase(
 			software._id,
-			"5874c971a3df914eec7b33df",
+			unitId,
 			[]
 		);
 		this.purhcaseDataService.addPurchase(purchase)

@@ -8,7 +8,6 @@ import {
   EventEmitter,
   Output
 } from '@angular/core';
-import { LoginService } from './login.service';
 import { FormGroup, Validators, FormControl, FormBuilder } from '@angular/forms';
 import { MdlTextFieldComponent, MdlDialogReference } from 'angular2-mdl';
 import { SoftwareDataService } from '../software-data-service';
@@ -46,8 +45,7 @@ export class NewSoftwareDialog implements OnInit {
   constructor(
     private softwareDataService: SoftwareDataService,
     private dialog: MdlDialogReference,
-    private fb: FormBuilder,
-    private loginService: LoginService
+    private fb: FormBuilder
     ){
 
     // just if you want to be informed if the dialog is hidden

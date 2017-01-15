@@ -28,5 +28,11 @@
     </tbody>
   </table>
 
-  <dialog-demo (newSoftware)='onCreateNewSoftware($event)'></dialog-demo>
+  <!-- <dialog-demo (newSoftware)='onCreateNewSoftware($event)'></dialog-demo> -->
+  <button
+          mdl-button
+          mdl-button-type="raised"
+          mdl-colored="primary"
+          mdl-ripple
+          (click)="showDialog($event)">Add a Software</button>
 </div>

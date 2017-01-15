@@ -17,7 +17,7 @@ const routes: Routes = [
 	{ path: 'softwares',  component: Softwares, canActivate: [AuthGuard] },
 	{ path: 'purchases',  component: Purchases, canActivate: [UserGuard] },
 	{ path: '', redirectTo: '/softwares', pathMatch: 'full'},
-	// { path: '**', 		  component:PageNotFoundComponent }
+	{ path: '**', 		  component:PageNotFoundComponent }
 ];
 
 @NgModule({
