@@ -67,15 +67,15 @@ export class Purchases {
 	}
 
 	validOnSearch(purchase: Purchase): boolean {
-		if(!this.searchInput) {
-			for(let i=0; i<purchase.length; i++) {
-				console.log(purchase[i]);
-			}
+		if(this.searchInput) {
+			let valueString  = concatObjVals(purchase, false);
+			return valueString.includes(this.searchInput.toLowerCase());
 		}
-		return (!this.searchInput) ||
-		 // purchase.softwareId.toString().includes(	this.searchInput.toLowerCase() ) ||
-		 purchase.unit.unitId.toString().includes(		this.searchInput.toLowerCase() ) ||
-		 purchase.unit.subUnit.toLowerCase().includes(	this.searchInput.toLowerCase() );
+		return true;
+		// return (!this.searchInput) ||
+		//  // purchase.softwareId.toString().includes(	this.searchInput.toLowerCase() ) ||
+		//  purchase.unit.unitId.toString().includes(		this.searchInput.toLowerCase() ) ||
+		//  purchase.unit.subUnit.toLowerCase().includes(	this.searchInput.toLowerCase() );
 	}
 
 	showPurchaseInfo($event, index, purchase: Purchase) {
@@ -107,4 +107,19 @@ export class Purchases {
 				error    => console.log("Error: "+<any>error)
 			);
 	}
+}
+
+function concatObjVals(obj, withPrivate) {
+	let valueString = '';
+	for(let key in obj) {
+		if(key[0] == '_' && !withPrivate){
+			continue;
+		}
+		if(typeof(obj[key]) == "object"){
+			valueString += concatObjVals(obj[key], withPrivate);
+		} else {
+			valueString += obj[key] + "; ";
+		}
+	}
+	return valueString;
 }
