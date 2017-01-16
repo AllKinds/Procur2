@@ -1,5 +1,5 @@
 import { Component } 		   from '@angular/core';
-import { Purchase, totalAmount }   		   from './purchase';
+import { Purchase, totalAmount, totalAmountOfYears, purchasedForYear }   		   from './purchase';
 // import { Unit } from '../units/unit';
 // import { PurchaseDataService } from '../data/purchase-data-service';
 import { PurchaseService } 	from './purchase.service';
@@ -24,9 +24,17 @@ import {
 
 export class Purchases {
 	private purchases;
-	private searchInput="";
-	public calcTotalAmount = totalAmount;
+	searchInput = "";
+	filterUnitInput = "";
+	filterYearInput = "";
+	public calcTotalAmount = totalAmountOfYears;
+	yearRange = {
+		from: 	0,
+		to: 	2050
+	}
 	public erroMsg: string;
+	advancedSearch = false;
+	advancedFilter = false;
 	user: User;
 
 	constructor(
@@ -67,6 +75,16 @@ export class Purchases {
 	}
 
 	validOnSearch(purchase: Purchase): boolean {
+		if(this.advancedFilter && (this.filterYearInput || this.filterUnitInput)) {
+			let isValid = true;
+			if(this.filterUnitInput){
+				isValid = isValid && (purchase.unit.unitId == this.filterUnitInput);
+			}
+			if(this.filterYearInput){
+				isValid = isValid && purchasedForYear(purchase, parseInt(this.filterYearInput));
+			}
+			return isValid;
+		}
 		if(this.searchInput) {
 			let valueString  = concatObjVals(purchase, false);
 			return valueString.includes(this.searchInput.toLowerCase());
@@ -106,6 +124,35 @@ export class Purchases {
 				},
 				error    => console.log("Error: "+<any>error)
 			);
+	}
+
+	toggleAdvSrc(): void {
+		if(!this.advancedSearch) {
+			this.searchInput = "";
+			this.calcTotalAmount = totalAmountOfYears
+		}
+		else {
+			this.filterUnitInput = "";
+			this.filterYearInput = "";
+			this.yearRange = {
+				from: 	0,
+				to:		2050
+			}
+			this.advancedFilter = false;
+		}
+		this.advancedSearch = !this.advancedSearch;
+		
+	}
+
+	filterAdv(): void {
+		if(this.filterYearInput) {
+			this.yearRange = {
+				from: 	parseInt(this.filterYearInput),
+				to:		parseInt(this.filterYearInput)
+			}
+		}
+		
+		this.advancedFilter = true;
 	}
 }
 

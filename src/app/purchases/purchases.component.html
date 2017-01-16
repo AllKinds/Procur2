@@ -1,5 +1,19 @@
 <div id='purchases-div' class="tab-view">
 	<mdl-textfield id="purchase-search" type="text" label="Search..." [(ngModel)]="searchInput" floating-label></mdl-textfield>
+	<button 
+	class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" 
+	mdl-ripple
+	(click)="toggleAdvSrc()"
+	> <mdl-icon>zoom_in</mdl-icon> 
+	</button>
+	<div class="advanced-search" *ngIf="advancedSearch">
+		<mdl-textfield id="filter-by-unit" type="text" label="Unit" [(ngModel)]="filterUnitInput" floating-label></mdl-textfield>
+		<mdl-textfield id="filter-by-year" type="text" label="Year" [(ngModel)]="filterYearInput" floating-label></mdl-textfield>
+		<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+		(click)="filterAdv()">
+			<mdl-icon>filter_list</mdl-icon>
+		</button>
+	</div>
 
 	<table id="purchases-table" *ngIf="purchaseService.purchases" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
 	  <thead>
@@ -20,7 +34,7 @@
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.software.softwareName }} </td>
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.unit.unitId }} </td>
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.unit.subUnit }} </td>
-	          <td> {{ calcTotalAmount(purchase) }} Units </td>
+	          <td> {{ calcTotalAmount(purchase, yearRange.from, yearRange.to) }} Units </td>
 	          <!-- <td> {{ calcTotalAmount(purchase) }} Units </td> -->
 	      </tr>
 	    </template>

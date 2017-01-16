@@ -20,6 +20,25 @@ export function totalAmount(purchase: Purchase): number {
 	return sum;
 }
 
+export function purchasedForYear(purchase: Purchase, forYear: number): boolean {
+	for(let amountForYear of purchase.amounts) {
+		if(amountForYear.year == forYear) {
+			return true;
+		}
+	}
+	return false;
+}
+
+export function totalAmountOfYears(purchase: Purchase, fromYear: number, endYear: number) {
+	let sum = 0;
+	for(let amountOfYear of purchase.amounts) {
+		if( amountOfYear.year >= fromYear && amountOfYear.year <= endYear){
+			sum += amountOfYear.amount;
+		}
+	}
+	return sum;
+}
+
 export function deletePurchaseFromArray(purchase: Purchase[], id: string) {
 	for(let i=0; i<purchase.length; i++){
 		if(purchase[i]._id == id){
