@@ -85,6 +85,10 @@ export class Purchases {
 			}
 			return isValid;
 		}
+		this.yearRange = {
+			from: 	0,
+			to: 	2050
+		}
 		if(this.searchInput) {
 			let valueString  = concatObjVals(purchase, false);
 			return valueString.includes(this.searchInput.toLowerCase());
