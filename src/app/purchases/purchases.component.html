@@ -7,7 +7,8 @@
 	> <mdl-icon>zoom_in</mdl-icon> 
 	</button>
 	<div class="advanced-search" *ngIf="advancedSearch">
-		<mdl-textfield id="filter-by-unit" type="text" label="Unit" [(ngModel)]="filterUnitInput" floating-label></mdl-textfield>
+		<mdl-textfield *ngIf = "userService.isBasicAdmin()"
+		 id="filter-by-unit" type="text" label="Unit" [(ngModel)]="filterUnitInput" floating-label></mdl-textfield>
 		<mdl-textfield id="filter-by-year" type="text" label="Year" [(ngModel)]="filterYearInput" floating-label></mdl-textfield>
 		<button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
 		(click)="filterAdv()">

@@ -1,7 +1,7 @@
 import { Component, ViewChild, OnInit} from '@angular/core';
 import { NewSoftwareDialog } from  './newSoftware/newSoftwareDialog.component';
 
-import { Software } from './software';
+import { Software, getPriceByYear } from './software';
 import { User }		from '../users/user';
 
 import { SoftwareDataService } from './software-data-service';
@@ -35,13 +35,14 @@ export class Softwares implements OnInit{
 	public mode= 'Observable';
 	public searchInput="";
 	public errorMessage: string;
+	public currentYear = new Date().getFullYear();
 	private user: User;
+	public getSoftwarePriceByYear = getPriceByYear;
 	constructor(
 		private softwareDataService: SoftwareDataService,
 		private dialogService: 		 MdlDialogService,
 		private userService: 		 AuthService,
 	) {}
-
 
 	public ngOnInit() {
 	  this.user = this.userService.user;
@@ -123,4 +124,5 @@ export class Softwares implements OnInit{
 
 
 	}
+
 }

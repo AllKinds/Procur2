@@ -26,6 +26,11 @@ export class AuthService {
   	return true;
   }
 
+  isBasicAdmin(): boolean {
+    if(!this.user) { return false };
+    return isIn(this.user.permission, ['Manager', 'Admin']);
+  }
+
   canView(): boolean {
     if(!this.user || this.user.permission == 'Basic') {
       return false;
@@ -76,4 +81,9 @@ export class AuthService {
     console.error(errMsg);
     return Observable.throw(errMsg);
   }
+}
+
+// Because JS is an ugly language
+function isIn (obj: any, objArray: Array<any>) {
+  return (objArray.indexOf(obj) > -1);
 }

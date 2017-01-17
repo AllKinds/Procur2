@@ -1,6 +1,6 @@
 import { Component, OnInit, OpaqueToken, Inject } from '@angular/core';
 
-import { Software, deleteSoftwareFromArray } from './software';
+import { Software, deleteSoftwareFromArray, PriceByYear } from './software';
 import { User } 							 from '../users/user';
 import { Purchase } 						 from '../purchases/purchase';
 
@@ -21,6 +21,9 @@ export class SoftwareInfoComponent {
 	errorMsg: string;
 	public software: Software;
 	user: User;
+	toggleAddPrice = false;
+
+	newPriceForYear= new PriceByYear();
 
 	constructor(
 		private dialog: MdlDialogReference,
@@ -29,6 +32,7 @@ export class SoftwareInfoComponent {
 		private userService: 		 AuthService,
 		@Inject(SOFTWARE_PROPS) software: Software) {
 		this.software = software;
+		this.user = this.userService.user;
 	}
 	OnInit() {
 		this.user = this.userService.user;
@@ -68,6 +72,23 @@ export class SoftwareInfoComponent {
 				},
 				error 	 => console.log("Error: "+<any>error)
 				);
+	}
+
+	updateYearPrice() {
+		if(!this.newPriceForYear.year || !this.newPriceForYear.price){
+			return
+		}
+		let yearPrice = 
+		{
+			year: 	parseInt(this.newPriceForYear.year),
+			price:	parseInt(this.newPriceForYear.price)
+		}
+		this.softwareDataService.updateYearPrice(this.software._id, yearPrice)
+			.subscribe(
+				software => console.log(software),
+				error 	 => console.log("Error: "+<any>error)
+			);
+		this.toggleAddPrice = false;
 	}
 }
 

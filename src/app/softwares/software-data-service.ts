@@ -1,7 +1,7 @@
 import { Injectable } 		from '@angular/core';
 import { Http, Response, Headers, RequestOptions } 	from '@angular/http';
 
-import { Software, deleteSoftwareFromArray } 		from './software';
+import { Software, deleteSoftwareFromArray, PriceByYear, updateSoftwareFromArray } 		from './software';
 import { Observable } 		from 'rxjs/Observable';
 
 
@@ -72,6 +72,16 @@ export class SoftwareDataService {
 	                    	deleteSoftwareFromArray(this.softwares, soft_id);
 	                    	return soft_id;
 	                    })
+  						.catch(this.handleError);
+  	}
+
+  	updateYearPrice(id: string, priceOfYear: PriceByYear) {
+  		return this.http.put(`${this.softwareUrl}/updateYearPrice/${id}`, {"priceOfYear": priceOfYear})
+  						.map((res: Response) => {
+  							let soft = this.extractData(res);
+  							updateSoftwareFromArray(this.softwares, id, soft);
+  							return soft;
+  						})
   						.catch(this.handleError);
   	}
 

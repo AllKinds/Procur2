@@ -75,6 +75,12 @@ export class Purchases {
 	}
 
 	validOnSearch(purchase: Purchase): boolean {
+		if(!this.filterYearInput) {
+			this.yearRange = {
+				from: 	0,
+				to: 	2050
+			}
+		}
 		if(this.advancedFilter && (this.filterYearInput || this.filterUnitInput)) {
 			let isValid = true;
 			if(this.filterUnitInput){
@@ -85,10 +91,7 @@ export class Purchases {
 			}
 			return isValid;
 		}
-		this.yearRange = {
-			from: 	0,
-			to: 	2050
-		}
+
 		if(this.searchInput) {
 			let valueString  = concatObjVals(purchase, false);
 			return valueString.includes(this.searchInput.toLowerCase());

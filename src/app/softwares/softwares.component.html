@@ -22,7 +22,7 @@
             <td class="mdl-data-table__cell--non-numeric" > {{ software.softwareId }} </td>
             <td class="mdl-data-table__cell--non-numeric" > {{ software.softwareName }} </td>
             <td class="mdl-data-table__cell--non-numeric" > {{ software.publisherName }} </td>
-            <td> {{ software.licenceCost }}$ </td>
+            <td> {{ getSoftwarePriceByYear(software, currentYear) }}$ </td>
         </tr>
       </template>
     </tbody>
