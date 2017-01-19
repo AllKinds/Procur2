@@ -7,6 +7,7 @@ export const PURCHASE_PROPS = new OpaqueToken('tmp value');
 
 @Component({
 	selector: 'purchase-info',
+	styleUrls: ['purchaseInfoComponent.component.css'],
 	templateUrl: 'purchaseInfoComponent.component.html'
 })
 export class PurchaseInfoComponent {

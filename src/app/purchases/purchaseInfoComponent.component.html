@@ -61,10 +61,11 @@
         >Add Year</button>
     </li>
   </ul>
-  <div *ngIf = "enableAddYear" class="mdl-list__item-primary-content" style="padding: 16px;">
+  <div *ngIf = "enableAddYear" id="add-year-form" class="mdl-list__item-primary-content" style="padding: 16px;">
     <span class="mdl-list__item-primary-content">
       <span>Add Year</span>
     </span>
+    <button (click)="enableAddYear = flase">X</button>
     <mdl-textfield
             label="Year"
             name="year"
@@ -87,7 +88,7 @@
         *ngIf = "enableAddYear"
         >Submit</button>
   </div>
-  <div class="actions">
+  <div class="actions" *ngIf = "!enableAddYear">
     <button 
     type="button"
     mdl-button (click)="deletePurchase(purchase)"
