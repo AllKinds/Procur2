@@ -1,3 +1,5 @@
+import * as Softwares from '../softwares/software';
+
 export class AmountByYear {
 	public year: number;
 	public amount: number;
@@ -29,14 +31,26 @@ export function purchasedForYear(purchase: Purchase, forYear: number): boolean {
 	return false;
 }
 
-export function totalAmountOfYears(purchase: Purchase, fromYear: number, endYear: number) {
+export function totalAmountOfYears(purchase: Purchase, fromYear: number, toYear: number) {
 	let sum = 0;
 	for(let amountOfYear of purchase.amounts) {
-		if( amountOfYear.year >= fromYear && amountOfYear.year <= endYear){
+		if( amountOfYear.year >= fromYear && amountOfYear.year <= toYear){
 			sum += amountOfYear.amount;
 		}
 	}
 	return sum;
+}
+
+export function totalCostForYears(purchase: Purchase, fromYear: number, toYear: number): number {
+	let costSum = 0;
+	for(let amountOfYear of purchase.amounts) {
+		let year = amountOfYear.year
+		if( year >= fromYear && year <= toYear){
+			let price = Softwares.getPriceByYear(purchase.software, year);
+			costSum += amountOfYear.amount * price;
+		}
+	}
+	return costSum;
 }
 
 export function deletePurchaseFromArray(purchase: Purchase[], id: string) {

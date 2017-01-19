@@ -1,10 +1,12 @@
 import { Component } 		   from '@angular/core';
-import { Purchase, totalAmount, totalAmountOfYears, purchasedForYear }   		   from './purchase';
+import { Purchase, totalAmount, totalAmountOfYears, purchasedForYear, totalCostForYears }   		   from './purchase';
 // import { Unit } from '../units/unit';
 // import { PurchaseDataService } from '../data/purchase-data-service';
 import { PurchaseService } 	from './purchase.service';
 import { AuthService } 		from '../auth.service';
 import { User }				from '../users/user';
+import { FormControl } 		from '@angular/forms';
+import 'rxjs/add/operator/debounceTime';
 
 import {
 	MdlDialogService,
@@ -23,15 +25,19 @@ import {
 })
 
 export class Purchases {
+	searchControl = new FormControl();
 	private purchases;
 	searchInput = "";
 	filterUnitInput = "";
 	filterYearInput = "";
 	public calcTotalAmount = totalAmountOfYears;
+	totalSumCost: number;
 	yearRange = {
 		from: 	0,
 		to: 	2050
 	}
+	totalCosts = {};
+	totalCostSum: number;
 	public erroMsg: string;
 	advancedSearch = false;
 	advancedFilter = false;
@@ -41,11 +47,16 @@ export class Purchases {
 		private purchaseService: 	PurchaseService,
 		private userService: 		AuthService,
 		private dialogService: 		MdlDialogService,
-	) {}
+	) {
+
+	}
 
 	public ngOnInit() {
 		this.user = this.userService.user;
-		this.getPurchases();	  
+		this.getPurchases();
+		this.searchControl.valueChanges
+			.debounceTime(200)
+			.subscribe(newValue => this.servSearch()); 
 	}
 
 	getMyUser() {
@@ -74,33 +85,52 @@ export class Purchases {
 		}
 	}
 
-	validOnSearch(purchase: Purchase): boolean {
-		if(!this.filterYearInput) {
-			this.yearRange = {
-				from: 	0,
-				to: 	2050
-			}
-		}
-		if(this.advancedFilter && (this.filterYearInput || this.filterUnitInput)) {
-			let isValid = true;
-			if(this.filterUnitInput){
-				isValid = isValid && (purchase.unit.unitId == this.filterUnitInput);
-			}
-			if(this.filterYearInput){
-				isValid = isValid && purchasedForYear(purchase, parseInt(this.filterYearInput));
-			}
-			return isValid;
-		}
 
-		if(this.searchInput) {
-			let valueString  = concatObjVals(purchase, false);
-			return valueString.includes(this.searchInput.toLowerCase());
-		}
+	servSearch() {
+		this.purchaseService.getPurchasesWithFilter(this.searchInput)
+							.subscribe(
+								purchases 	=> {
+									this.purchases = purchases;
+									// this.funkyfunc();
+									this.totalCosts = this.purchaseService.totalCosts;
+									this.totalSumCost = this.purchaseService.totalCostSum;
+								},
+								error 		=> this.erroMsg = <any>error);
+	}
+
+	funkyfunc() {
+		// if(!this.purchases){return};
+		// for(let i=0; i<this.purchases.length; i++){
+		// 	let purchase = this.purchases[i];
+		// 	this.totalCosts[`${purchase._id}`] = this.calcTotalCost(purchase);
+		// }
+	}
+
+	validOnSearch(purchase: Purchase): boolean {
+		return this.totalCosts[purchase._id] > 0
+		// if(!this.filterYearInput) {
+		// 	this.yearRange = {
+		// 		from: 	0,
+		// 		to: 	2050
+		// 	}
+		// }
+		// if(this.advancedFilter && (this.filterYearInput || this.filterUnitInput)) {
+		// 	let isValid = true;
+		// 	if(this.filterUnitInput){
+		// 		isValid = isValid && (purchase.unit.unitId == this.filterUnitInput);
+		// 	}
+		// 	if(this.filterYearInput){
+		// 		isValid = isValid && purchasedForYear(purchase, parseInt(this.filterYearInput));
+		// 	}
+		// 	return isValid;
+		// }
+
+		// if(this.searchInput) {
+		// 	let valueString  = concatObjVals(purchase, false);
+		// 	return valueString.includes(this.searchInput.toLowerCase());
+		// }
 		return true;
-		// return (!this.searchInput) ||
-		//  // purchase.softwareId.toString().includes(	this.searchInput.toLowerCase() ) ||
-		//  purchase.unit.unitId.toString().includes(		this.searchInput.toLowerCase() ) ||
-		//  purchase.unit.subUnit.toLowerCase().includes(	this.searchInput.toLowerCase() );
+
 	}
 
 	showPurchaseInfo($event, index, purchase: Purchase) {
@@ -134,6 +164,10 @@ export class Purchases {
 	}
 
 	toggleAdvSrc(): void {
+		if(this.searchInput){
+			this.getPurchases();
+		}
+		
 		if(!this.advancedSearch) {
 			this.searchInput = "";
 			this.calcTotalAmount = totalAmountOfYears
@@ -159,7 +193,45 @@ export class Purchases {
 			}
 		}
 		
-		this.advancedFilter = true;
+		// this.advancedFilter = true;
+
+		this.purchaseService.getPivotTable(this.filterYearInput, this.filterUnitInput)
+							.subscribe(
+								purchase => {
+									console.log('Yo');
+								},
+								error    => console.log("Error: "+<any>error)
+							);
+
+	}
+
+	calcTotalCost(purchase: Purchase) {
+		return totalCostForYears(purchase, this.yearRange.from, this.yearRange.to);
+	}
+
+	misha(id) {
+		return this.totalCosts[`${id}`];
+	}
+
+	mish(any){
+		this.totalSumCost = this.purchaseService.totalCostSum;
+		return this.totalSumCost;
+	}
+
+	calcTotalSum(purchases: Purchase[]): number{
+		let sum = 0;
+		return sum;
+	}
+
+	tempFunc(){
+		this.purchaseService.getPivotTable(2015, "586c9d4ea31bdc0957621782")
+							.subscribe(
+								purchases 	=> {
+									this.purchases = purchases;
+									this.totalCosts = this.purchaseService.totalCosts;
+									this.totalSumCost = this.purchaseService.totalCostSum;
+								},
+								error 		=> this.erroMsg = <any>error);
 	}
 }
 
@@ -177,3 +249,4 @@ function concatObjVals(obj, withPrivate) {
 	}
 	return valueString;
 }
+

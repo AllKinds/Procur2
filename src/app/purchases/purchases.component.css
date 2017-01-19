@@ -6,3 +6,26 @@
 #purchases-table {
 	width: 100%;
 }
+
+#price-card {
+	float: right;
+    width: auto;
+    margin: 2%;
+    padding: 1%;
+    min-height: 0px !important;
+    background-color: #FFF2CC
+}
+
+#price-tag {
+	margin: 0px !important;
+}
+
+#advanced-search-button {
+	margin: 20px;
+	margin-left: auto;
+	float: left;
+}
+
+.advanced-search {
+	float: left;
+}

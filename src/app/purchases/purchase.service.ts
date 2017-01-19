@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
-import { Purchase, totalAmount, deletePurchaseFromArray, updatePurchaseFromArray } from './purchase';
+import { Purchase, totalAmount, deletePurchaseFromArray, updatePurchaseFromArray, totalCostForYears } from './purchase';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
@@ -10,6 +10,13 @@ export class PurchaseService {
 	private purchaseUrl = 'http://localhost:3000/api/purchase';
 
 	public purchases: Purchase[];
+	public totalCosts = {};
+	public totalCostSum: number;
+
+	yearRange = {
+		from: 	0,
+		to: 	2050
+	}
 
 	constructor(private http: Http) {
 		this.purchases = [];
@@ -19,9 +26,42 @@ export class PurchaseService {
 		return this.http.get(this.purchasesUrl)
 						.map((res: Response) => {
 							let prcs = this.extractData(res);
+							this.updateTotalCost(prcs);
 							this.purchases = prcs;
 						})
 						.catch(this.handleError);
+	}
+
+	getPurchasesWithFilter(filter: string): Observable<Purchase[]> {
+		if(!filter){
+			return this.getPurchases();
+		}
+		return this.http.get(this.purchasesUrl+'/search/'+filter)
+						.map((res: Response) => {
+							let prcs = this.extractData(res);
+							this.updateTotalCost(prcs);
+							this.purchases = prcs;
+						})
+						.catch(this.handleError);
+	}
+
+	getPivotTable(year: number, unitNmase: string): Observable<Purchase[]> {
+		if(!year) {
+			this.yearRange = {
+				from: 	0,
+				to: 	2050
+			}
+			if(!unitNmase){
+				return this.getPurchases();
+			}
+			return this.getPurchasesByUnitName(unitNmase);
+		}
+		// Year is defined
+		this.yearRange = {
+			from: 	year,
+			to: 	year
+		}
+		return this.getPurchasesByUnitName(unitNmase);
 	}
 
 	getPurchasesByUnit(unit_id: string): Observable<Purchase[]> {
@@ -33,10 +73,21 @@ export class PurchaseService {
 						.catch(this.handleError);
 	}
 
+	getPurchasesByUnitName(unitName: string): Observable<Purchase[]> {
+		return this.http.get(this.purchasesUrl+'/byUnitName/'+unitName)
+						.map((res: Response) => {
+							let prcs = this.extractData(res);
+							this.updateTotalCost(prcs);
+							this.purchases = prcs;
+						})
+						.catch(this.handleError);
+	}
+
 	addPurchase(purchase: Purchase): Observable<Purchase> {
 		return this.http.post(this.purchaseUrl, purchase)
 						.map((res: Response) => {
 							let prc = this.extractData(res);
+							this.updateOneTotalCost(prc);
 							this.purchases.push(prc);
 						})
 						.catch(this.handleError);
@@ -49,6 +100,7 @@ export class PurchaseService {
 		return this.http.delete(`${this.purchaseUrl}/${id}`)
 						.map((res: Response) => {
 							let prc_id = this.extractData(res);
+							this.updateDeleted(prc_id);
 							deletePurchaseFromArray(this.purchases, prc_id);
 						})
 						.catch(this.handleError);
@@ -72,17 +124,6 @@ export class PurchaseService {
 						.catch(this.handleError);
 	}
 
-	checkThis () {
-		let purchaseId = "585a72d3b3b63b65ea7bc6f3";
-		let yearlyAmount = {"year": 1, "amount": 1};
-		return this.http.put(`${this.purchaseUrl}/${purchaseId}/newYear`, yearlyAmount)
-						.map((res: Response) => {
-							console.log("Year Added");
-							let purchase = this.extractData(res);
-							this.purchases.push(purchase);
-						})
-						.catch(this.handleError);
-	}
 	purchaseAddYear(purchaseId: string, year: number, amount: number){
 		// purchaseId = "585a72d3b3b63b65ea7bc6f3";
 		let yearlyAmount = {"year": year, "amount": amount};
@@ -91,11 +132,50 @@ export class PurchaseService {
 							console.log("Year Added");
 							let updatedPurchase = this.extractData(res);
 							updatePurchaseFromArray(this.purchases, purchaseId, updatedPurchase);
+							this.updateOneTotalCost(updatedPurchase);
 						})
 						.catch(this.handleError);
 	}
 
+	updateTotalCost(purchases: Purchase[]){
+		if(!purchases){return};
+		this.totalCostSum = 0;
+		for(let i=0; i<purchases.length; i++){
+			let purchase = purchases[i];
+			let totalCost = this.calcTotalCost(purchase);
+			this.totalCosts[`${purchase._id}`] = totalCost;
+			this.totalCostSum += totalCost;
+		}
+	}
 
+	updateDeleted(purchaseId: number) {
+		for (let i=0; i<this.purchases.length; i++){
+			if(this.purchases[i]._id == purchaseId){
+				this.updateOneTotalCost(this.purchases[i], true);
+			}
+		}
+	}
+
+	updateOneTotalCost(purchase: Purchase, deleted?: boolean){
+		if(!purchase){return};
+		let totalCost = this.calcTotalCost(purchase);
+		if(deleted) {
+			// delete
+			this.totalCostSum -= totalCost;
+			this.totalCosts[purchase._id] = undefined;
+			return;
+		}
+		else if(this.totalCosts[purchase._id]){
+			// update
+			this.totalCostSum -= this.totalCosts[purchase._id];
+		}
+		this.totalCosts[purchase._id] = totalCost;
+		this.totalCostSum += totalCost;
+	}
+
+	calcTotalCost(purchase: Purchase) {
+		return totalCostForYears(purchase, this.yearRange.from, this.yearRange.to);
+	}
 
 	private extractData(res: Response) {
 		let body = res.json();
@@ -115,4 +195,6 @@ export class PurchaseService {
 		console.error(errMsg);
 		return Observable.throw(errMsg);
 	}
+
+
 }

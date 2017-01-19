@@ -1,11 +1,20 @@
 <div id='purchases-div' class="tab-view">
-	<mdl-textfield id="purchase-search" type="text" label="Search..." [(ngModel)]="searchInput" floating-label></mdl-textfield>
-	<button 
-	class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" 
-	mdl-ripple
-	(click)="toggleAdvSrc()"
-	> <mdl-icon>zoom_in</mdl-icon> 
+	<!-- <mdl-textfield id="purchase-search" type="text" label="Search..." [(ngModel)]="searchInput" floating-label></mdl-textfield> -->
+	<button id = "advanced-search-button"
+		class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored" 
+		mdl-ripple
+		(click)="toggleAdvSrc()"> <mdl-icon>zoom_in</mdl-icon> 
 	</button>
+	<mdl-textfield id="purchase-search" type="text" label="Search..." 
+		*ngIf="!advancedSearch"
+		[formControl]="searchControl" [(ngModel)]="searchInput" 
+		[disabled]="advancedSearch"
+	floating-label></mdl-textfield>
+	
+	<div class="demo-card-square mdl-card mdl-shadow--2dp" id=price-card>
+		<h3 style="float: right" id="price-tag">{{mish(purchases)}}$</h3>
+	</div>
+
 	<div class="advanced-search" *ngIf="advancedSearch">
 		<mdl-textfield *ngIf = "userService.isBasicAdmin()"
 		 id="filter-by-unit" type="text" label="Unit" [(ngModel)]="filterUnitInput" floating-label></mdl-textfield>
@@ -23,6 +32,7 @@
 	      <th class="mdl-data-table__cell--non-numeric">Unit ID</th>
 	      <th class="mdl-data-table__cell--non-numeric">Sub Unit</th>
 	      <th class="mdl-data-table__cell--non-numeric">Total Amount</th>
+	      <th class="mdl-data-table__cell--non-numeric">Total Cost</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -36,6 +46,7 @@
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.unit.unitId }} </td>
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.unit.subUnit }} </td>
 	          <td> {{ calcTotalAmount(purchase, yearRange.from, yearRange.to) }} Units </td>
+	          <td> {{ misha(purchase._id) }}$ </td>
 	          <!-- <td> {{ calcTotalAmount(purchase) }} Units </td> -->
 	      </tr>
 	    </template>
