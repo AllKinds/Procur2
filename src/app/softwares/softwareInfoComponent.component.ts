@@ -2,7 +2,7 @@ import { Component, OnInit, OpaqueToken, Inject } from '@angular/core';
 
 import { Software, deleteSoftwareFromArray, PriceByYear } from './software';
 import { User } 							 from '../users/user';
-import { Purchase } 						 from '../purchases/purchase';
+import { Purchase, AmountByYear } 						 from '../purchases/purchase';
 
 import { SoftwareDataService } from './software-data-service';
 import { PurchaseService } from '../purchases/purchase.service';
@@ -22,8 +22,10 @@ export class SoftwareInfoComponent {
 	public software: Software;
 	user: User;
 	toggleAddPrice = false;
+	togglePurchaseSoft = false;
 
-	newPriceForYear= new PriceByYear();
+	newPriceForYear = new PriceByYear();
+	newPurchase 	= new AmountByYear();
 
 	constructor(
 		private dialog: MdlDialogReference,
@@ -58,11 +60,14 @@ export class SoftwareInfoComponent {
 	}
 
 	purchaseSoftware(software: Software) {
-		let unitId = this.user ? this.user.unitId: '5874cc65171f055952ada0c3'
+		let unitId = this.user ? this.user.unitId: '5881a78b3779430558ac1dc1'
 		let purchase = new Purchase(
 			software._id,
 			unitId,
-			[]
+			[{
+				year: this.newPurchase.year,
+				amount: this.newPurchase.amount
+			}]
 		);
 		this.purhcaseDataService.addPurchase(purchase)
 			.subscribe(

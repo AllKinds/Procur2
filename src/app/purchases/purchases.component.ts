@@ -83,6 +83,7 @@ export class Purchases {
 									purchases 	=> this.purchases = purchases,
 									error 		=> this.erroMsg = <any>error);
 		}
+		this.initialYearRange();
 	}
 
 
@@ -108,29 +109,6 @@ export class Purchases {
 
 	validOnSearch(purchase: Purchase): boolean {
 		return this.totalCosts[purchase._id] > 0
-		// if(!this.filterYearInput) {
-		// 	this.yearRange = {
-		// 		from: 	0,
-		// 		to: 	2050
-		// 	}
-		// }
-		// if(this.advancedFilter && (this.filterYearInput || this.filterUnitInput)) {
-		// 	let isValid = true;
-		// 	if(this.filterUnitInput){
-		// 		isValid = isValid && (purchase.unit.unitId == this.filterUnitInput);
-		// 	}
-		// 	if(this.filterYearInput){
-		// 		isValid = isValid && purchasedForYear(purchase, parseInt(this.filterYearInput));
-		// 	}
-		// 	return isValid;
-		// }
-
-		// if(this.searchInput) {
-		// 	let valueString  = concatObjVals(purchase, false);
-		// 	return valueString.includes(this.searchInput.toLowerCase());
-		// }
-		return true;
-
 	}
 
 	showPurchaseInfo($event, index, purchase: Purchase) {
@@ -175,11 +153,9 @@ export class Purchases {
 		else {
 			this.filterUnitInput = "";
 			this.filterYearInput = "";
-			this.yearRange = {
-				from: 	0,
-				to:		2050
-			}
+			this.initialYearRange();
 			this.advancedFilter = false;
+			this.purchaseService.advFilter(undefined, "");
 		}
 		this.advancedSearch = !this.advancedSearch;
 		
@@ -195,7 +171,7 @@ export class Purchases {
 		
 		// this.advancedFilter = true;
 
-		this.purchaseService.getPivotTable(this.filterYearInput, this.filterUnitInput)
+		this.purchaseService.advFilter(this.filterYearInput, this.filterUnitInput)
 							.subscribe(
 								purchase => {
 									console.log('Yo');
@@ -203,6 +179,13 @@ export class Purchases {
 								error    => console.log("Error: "+<any>error)
 							);
 
+	}
+
+	initialYearRange(): void {
+		this.yearRange = {
+			from: 	0,
+			to:		2050
+		}
 	}
 
 	calcTotalCost(purchase: Purchase) {
@@ -224,7 +207,7 @@ export class Purchases {
 	}
 
 	tempFunc(){
-		this.purchaseService.getPivotTable(2015, "586c9d4ea31bdc0957621782")
+		this.purchaseService.advFilter(2015, "586c9d4ea31bdc0957621782")
 							.subscribe(
 								purchases 	=> {
 									this.purchases = purchases;

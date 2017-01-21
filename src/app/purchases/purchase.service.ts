@@ -45,24 +45,28 @@ export class PurchaseService {
 						.catch(this.handleError);
 	}
 
-	getPivotTable(year: number, unitNmase: string): Observable<Purchase[]> {
-		if(!year) {
+	advFilter(year: number, unitName: string): Observable<Purchase[]> {
+		if(year) {
+			this.yearRange = {
+				from: 	year,
+				to: 	year
+			}
+		} else {
 			this.yearRange = {
 				from: 	0,
 				to: 	2050
 			}
-			if(!unitNmase){
-				return this.getPurchases();
-			}
-			return this.getPurchasesByUnitName(unitNmase);
 		}
-		// Year is defined
-		this.yearRange = {
-			from: 	year,
-			to: 	year
-		}
-		return this.getPurchasesByUnitName(unitNmase);
+
+		if(unitName) {
+			return this.getPurchasesByUnitName(unitName);
+		} 
+		
+		return this.getPurchases();
+
 	}
+
+
 
 	getPurchasesByUnit(unit_id: string): Observable<Purchase[]> {
 		return this.http.get(this.purchasesUrl+'/byUnit/'+unit_id)

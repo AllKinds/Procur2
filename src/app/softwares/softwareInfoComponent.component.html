@@ -34,27 +34,27 @@
     </li>
   </ul>
 
-  <div class="actions" *ngIf="!toggleAddPrice">
+  <div class="actions" *ngIf="!(toggleAddPrice || togglePurchaseSoft)">
     <button *ngIf = "userService.isBasicAdmin()"
-    type="button"
-    mdl-button (click)="toggleAddPrice = true"
-    [disabled]=false
-    mdl-button-type="raised" 
-    mdl-ripple mdl-colored="primary">Edit Price</button>
+      type="button"
+      mdl-button (click)="toggleAddPrice = true"
+      [disabled]=false
+      mdl-button-type="raised" 
+      mdl-ripple mdl-colored="primary">Edit Price</button>
     
     <button *ngIf = "userService.isBasicAdmin()"
-    type="button"
-    mdl-button (click)="onDelete(software)"
-    [disabled]=false
-    mdl-button-type="raised" 
-    mdl-ripple mdl-colored="primary">Delete</button>
+      type="button"
+      mdl-button (click)="onDelete(software)"
+      [disabled]=false
+      mdl-button-type="raised" 
+      mdl-ripple mdl-colored="primary">Delete</button>
 
     <button *ngIf = "user.permission == 'Unit'"
-    type="button"
-    mdl-button (click)="purchaseSoftware(software)"
-    [disabled]=false
-    mdl-button-type="raised" 
-    mdl-ripple mdl-colored="primary">Purchase</button>
+      type="button"
+      mdl-button (click)="togglePurchaseSoft = true"
+      [disabled]=false
+      mdl-button-type="raised" 
+      mdl-ripple mdl-colored="primary">Purchase</button>
   </div>
   
   <div class="toggle-view-div" *ngIf = "toggleAddPrice">
@@ -74,11 +74,36 @@
             pattern="[1-9]+[0-9]*"></mdl-textfield>
 
     <button *ngIf = "userService.isBasicAdmin()"
-    type="button"
-    mdl-button (click)="updateYearPrice()"
-    [disabled]=false
-    mdl-button-type="raised" 
-    mdl-ripple mdl-colored="primary">Submit</button>
+      type="button"
+      mdl-button (click)="updateYearPrice()"
+      [disabled]=false
+      mdl-button-type="raised" 
+      mdl-ripple mdl-colored="primary">Submit</button>
+  </div>
+
+  <div class="purchase-soft-div" *ngIf = "togglePurchaseSoft">
+    <mdl-textfield
+            label="Number of Units"
+            name="units number"
+            type="number"
+            [(ngModel)]="newPurchase.amount"
+            floating-label
+            pattern="[1-9]+[0-9]*"></mdl-textfield>
+
+    <mdl-textfield
+            label="Year"
+            name="year"
+            type="number"
+            [(ngModel)]="newPurchase.year"
+            floating-label
+            pattern="[1-9]+[0-9]*"></mdl-textfield>
+            
+    <button *ngIf = "user.permission == 'Unit'"
+      type="button"
+      mdl-button (click)="purchaseSoftware(software)"
+      [disabled] = "!(newPurchase.year && newPurchase.amount)"
+      mdl-button-type="raised" 
+      mdl-ripple mdl-colored="primary">Purchase</button>
   </div>
 
 </div>
