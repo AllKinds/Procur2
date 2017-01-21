@@ -14,7 +14,8 @@ export const SOFTWARE_PROPS = new OpaqueToken('tmp value');
 
 @Component({
 	selector: 'software-info',
-	templateUrl: 'softwareInfoComponent.component.html'
+	templateUrl: 'softwareInfoComponent.component.html',
+ 	styleUrls: ['softwares.component.css']
 })
 export class SoftwareInfoComponent {
 

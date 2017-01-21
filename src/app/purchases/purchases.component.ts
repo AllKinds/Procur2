@@ -1,5 +1,6 @@
 import { Component } 		   from '@angular/core';
 import { Purchase, totalAmount, totalAmountOfYears, purchasedForYear, totalCostForYears }   		   from './purchase';
+import { getPriceByYear } from '../softwares/software'; 
 // import { Unit } from '../units/unit';
 // import { PurchaseDataService } from '../data/purchase-data-service';
 import { PurchaseService } 	from './purchase.service';
@@ -31,6 +32,7 @@ export class Purchases {
 	filterUnitInput = "";
 	filterYearInput = "";
 	public calcTotalAmount = totalAmountOfYears;
+	public getSoftwareCurrentPrice = getPriceByYear;
 	totalSumCost: number;
 	yearRange = {
 		from: 	0,
@@ -92,26 +94,18 @@ export class Purchases {
 							.subscribe(
 								purchases 	=> {
 									this.purchases = purchases;
-									// this.funkyfunc();
 									this.totalCosts = this.purchaseService.totalCosts;
 									this.totalSumCost = this.purchaseService.totalCostSum;
 								},
 								error 		=> this.erroMsg = <any>error);
 	}
 
-	funkyfunc() {
-		// if(!this.purchases){return};
-		// for(let i=0; i<this.purchases.length; i++){
-		// 	let purchase = this.purchases[i];
-		// 	this.totalCosts[`${purchase._id}`] = this.calcTotalCost(purchase);
-		// }
-	}
 
 	validOnSearch(purchase: Purchase): boolean {
 		return this.totalCosts[purchase._id] > 0
 	}
 
-	showPurchaseInfo($event, index, purchase: Purchase) {
+	showPurchaseInfo(purchase: Purchase) {
 		let pDialog = this.dialogService.showCustomDialog({
 			component: PurchaseInfoComponent,
 			providers: [{provide: PURCHASE_PROPS, useValue: purchase}],
@@ -123,14 +117,7 @@ export class Purchases {
 			console.log('info dialog is visible', dialogReference );
 		});
 	}
-	tempAddPurchase(){
-		let purchase = new Purchase(
-			"586a0877aeb9d22d00d973b4",
-			"586c9d4ea31bdc0957621782",
-			[]
-		);
-		this.addPurchase(purchase);
-	}
+
 	addPurchase(purchase: Purchase){
 		this.purchaseService.addPurchase(purchase)
 			.subscribe(
@@ -171,7 +158,7 @@ export class Purchases {
 		
 		// this.advancedFilter = true;
 
-		this.purchaseService.advFilter(this.filterYearInput, this.filterUnitInput)
+		this.purchaseService.advFilter(parseInt(this.filterYearInput), this.filterUnitInput)
 							.subscribe(
 								purchase => {
 									console.log('Yo');
@@ -215,6 +202,15 @@ export class Purchases {
 									this.totalSumCost = this.purchaseService.totalCostSum;
 								},
 								error 		=> this.erroMsg = <any>error);
+	}
+
+	simpleShortDate(date: Date): string{
+		let d = new Date(date);
+		let day = d.getDay();
+		let month = d.getMonth() + 1;
+		let year = d.getFullYear();
+
+		return day+'/'+month+'/'+year;
 	}
 }
 

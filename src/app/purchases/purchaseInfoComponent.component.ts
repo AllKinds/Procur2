@@ -1,6 +1,8 @@
 import { Component, OpaqueToken, Inject } from '@angular/core';
 import { Purchase, deletePurchaseFromArray } from './purchase';
+import { User }				from '../users/user';
 import { PurchaseService } from './purchase.service';
+import { AuthService } 		from '../auth.service';
 import { MdlDialogReference } from 'angular2-mdl';
 
 export const PURCHASE_PROPS = new OpaqueToken('tmp value');
@@ -17,12 +19,20 @@ export class PurchaseInfoComponent {
 	public newYear:string;
 	public newAmount:string;
 
+	showYears = false;
+	user: User;
+
 	constructor( 
 		private dialog: MdlDialogReference,
 		private purchaseDataService: PurchaseService,
+		private userService: 		AuthService,
 		@Inject(PURCHASE_PROPS) purchase: Purchase 
 	) {
 		this.purchase = purchase;
+	}
+
+	public ngOnInit() {
+		this.user = this.userService.user;
 	}
 
 	toggleAddYear() {
@@ -61,5 +71,13 @@ export class PurchaseInfoComponent {
 									purchase => {console.log("Deleted"); this.dialog.hide()},
 									error => console.log("Error: "+<any>error)
 								);
+	}
+
+	calcPurchaseTotalAmount(purchase: Purchase): number {
+		let sum = 0;
+		for(let afy of purchase.amounts) {
+			sum += afy.amount;
+		}
+		return sum;
 	}
 }

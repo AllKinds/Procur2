@@ -5,7 +5,7 @@
   }
 </style>
 
-<h3 class="mdl-dialog__title">{{ software.softwareName }}</h3>
+<h3 class="mdl-dialog__title">{{ software.publisherName }} - {{ software.softwareName }}</h3>
 <div >
   <ul class="demo-list-two mdl-list">
     <li class="mdl-list__item mdl-list__item--two-line">
@@ -39,25 +39,26 @@
       type="button"
       mdl-button (click)="toggleAddPrice = true"
       [disabled]=false
-      mdl-button-type="raised" 
       mdl-ripple mdl-colored="primary">Edit Price</button>
     
     <button *ngIf = "userService.isBasicAdmin()"
       type="button"
       mdl-button (click)="onDelete(software)"
       [disabled]=false
-      mdl-button-type="raised" 
       mdl-ripple mdl-colored="primary">Delete</button>
 
     <button *ngIf = "user.permission == 'Unit'"
       type="button"
       mdl-button (click)="togglePurchaseSoft = true"
       [disabled]=false
-      mdl-button-type="raised" 
       mdl-ripple mdl-colored="primary">Purchase</button>
   </div>
   
   <div class="toggle-view-div" *ngIf = "toggleAddPrice">
+    <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored close-btn" 
+      mdl-ripple (click)="toggleAddPrice = false">
+        <mdl-icon>close</mdl-icon>
+      </button>
     <mdl-textfield
             label="Year"
             name="year"
@@ -77,7 +78,6 @@
       type="button"
       mdl-button (click)="updateYearPrice()"
       [disabled]=false
-      mdl-button-type="raised" 
       mdl-ripple mdl-colored="primary">Submit</button>
   </div>
 
@@ -102,7 +102,6 @@
       type="button"
       mdl-button (click)="purchaseSoftware(software)"
       [disabled] = "!(newPurchase.year && newPurchase.amount)"
-      mdl-button-type="raised" 
       mdl-ripple mdl-colored="primary">Purchase</button>
   </div>
 

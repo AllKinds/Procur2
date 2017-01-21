@@ -88,6 +88,7 @@ export class PurchaseService {
 	}
 
 	addPurchase(purchase: Purchase): Observable<Purchase> {
+		// purchase.lastUpdated = new Date();
 		return this.http.post(this.purchaseUrl, purchase)
 						.map((res: Response) => {
 							let prc = this.extractData(res);

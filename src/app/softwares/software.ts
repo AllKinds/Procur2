@@ -25,7 +25,10 @@ export function deleteSoftwareFromArray(softwares: Software[], id: string) {
 	return -1;
 }
 
-export function getPriceByYear(software: Software, year:number): number {
+export function getPriceByYear(software: Software, year?:number): number {
+	if(!year) {
+		let year = (new Date()).getFullYear;
+	}
 	if(!software){
 		return -1;
 	}

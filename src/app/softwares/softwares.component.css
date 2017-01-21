@@ -17,3 +17,7 @@ table {
 	right: 5%;
 	bottom: 5%;
 }
+
+.close-btn {
+	float: right;
+}

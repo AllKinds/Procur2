@@ -31,8 +31,10 @@
 	      <th class="mdl-data-table__cell--non-numeric">Software</th>
 	      <th class="mdl-data-table__cell--non-numeric">Unit ID</th>
 	      <th class="mdl-data-table__cell--non-numeric">Sub Unit</th>
-	      <th class="mdl-data-table__cell--non-numeric">Total Amount</th>
-	      <th class="mdl-data-table__cell--non-numeric">Total Cost</th>
+	      <th> Current Price	</th>
+	      <th> Total Amount		</th>
+	      <th> Total Cost		</th>
+	      <th> Updated 			</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -41,15 +43,28 @@
 	    let i = index>
 	      <tr 
 	      *ngIf="validOnSearch(purchase)"
-	      (click)='showPurchaseInfo($event,i,purchase)'>
+	      (click)='showPurchaseInfo(purchase)'>
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.software.softwareName }} </td>
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.unit.unitId }} </td>
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.unit.subUnit }} </td>
+	          <td > {{ getSoftwareCurrentPrice(purchase.software) }}$ </td>
 	          <td> {{ calcTotalAmount(purchase, yearRange.from, yearRange.to) }} Units </td>
 	          <td> {{ misha(purchase._id) }}$ </td>
+	          <td> {{ purchase.lastUpdated | date:'dd/MM/yy' }} </td>
 	          <!-- <td> {{ calcTotalAmount(purchase) }} Units </td> -->
 	      </tr>
 	    </template>
 	  </tbody>
 	</table>
 </div>
+
+
+<!-- 
+
+<template 
+	    *ngFor="let purchase of purchaseService.purchases">
+	      <tr 
+	      *ngIf="validOnSearch(purchase)"
+	      (click)='showPurchaseInfo($event,purchase)'>
+
+ -->

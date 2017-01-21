@@ -7,10 +7,11 @@ export class AmountByYear {
 
 export class Purchase {
 	constructor(
-		public software: any,
-		public unit: any,
-		public amounts: AmountByYear[],
-		public _id?: string
+		public software: 	any,
+		public unit: 		any,
+		public amounts: 	AmountByYear[],
+		public lastUpdated: Date,
+		public _id?: 		string
 	) {}
 }
 

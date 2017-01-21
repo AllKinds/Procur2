@@ -3,6 +3,30 @@
 	display: table-caption;
 }
 
-#close-year-form {
+.close-btn {
 	float: right;
+	top: -5px;
+}
+
+.openning-list {
+	padding: 1em;
+}
+
+.two-rows>li:nth-child(even) {
+	padding-left: 50%;
+	float: right;
+}
+
+.two-rows>li:nth-child(odd) {
+	float: left;
+}
+
+.two-rows-view:nth-child(odd) {
+	color: red;
+	float: left;
+    margin-right: 20%;
+}
+
+.two-rows-view:nth-child(even) {
+	color: blue;
 }
