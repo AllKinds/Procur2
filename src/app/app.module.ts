@@ -20,6 +20,8 @@ import { NewSoftwareDialog }        from  './softwares/newSoftware/newSoftwareDi
 import { SoftwareDataService }     from './softwares/software-data-service';
 import { PurchaseService }         from './purchases/purchase.service';
 import { MdlDialogService,  }      from 'angular2-mdl';
+//  Other
+import { OrderBy } from './orderBy';
 // ---------
 
 
@@ -32,7 +34,8 @@ import { MdlDialogService,  }      from 'angular2-mdl';
     PurchaseInfoComponent,
     NewSoftwareDialog,
     LoginComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    OrderBy
   ],
   entryComponents: [ 
     SoftwareInfoComponent, 

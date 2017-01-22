@@ -28,21 +28,26 @@
 	<table id="purchases-table" *ngIf="purchaseService.purchases" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
 	  <thead>
 	    <tr>
-	      <th class="mdl-data-table__cell--non-numeric">Software</th>
+	      <th class="mdl-data-table__cell--non-numeric"> 
+<!-- 	      <button (click)="toggleOrder['softId'] = !toggleOrder['softId']; OrderByParam='software.softwareName'" 
+		      class="mdl-button mdl-button--icon">
+		      <mdl-icon *ngIf = "toggleOrder['softId']">keyboard_arrow_down</mdl-icon>
+		      <mdl-icon *ngIf = "!toggleOrder['softId']">keyboard_arrow_up</mdl-icon>
+	      </button>Software</th> -->
 	      <th class="mdl-data-table__cell--non-numeric">Unit ID</th>
 	      <th class="mdl-data-table__cell--non-numeric">Sub Unit</th>
 	      <th> Current Price	</th>
 	      <th> Total Amount		</th>
 	      <th> Total Cost		</th>
-	      <th> Updated 			</th>
+	      <th> <button (click)="toggleOrder['lastUpdated'] = !toggleOrder['lastUpdated'] ; OrderByParam='lastUpdated'" 
+		      class="mdl-button mdl-button--icon">
+		      <mdl-icon *ngIf = "toggleOrder['lastUpdated']">keyboard_arrow_down</mdl-icon>
+		      <mdl-icon *ngIf = "!toggleOrder['lastUpdated']">keyboard_arrow_up</mdl-icon>
+	      </button>	Updated </th>
 	    </tr>
 	  </thead>
-	  <tbody>
-	    <template 
-	    ngFor let-purchase [ngForOf]="purchaseService.purchases" 
-	    let i = index>
-	      <tr 
-	      *ngIf="validOnSearch(purchase)"
+	  <tbody>	    
+	      <tr *ngFor = "let purchase of purchaseService.purchases | orderBy: getOrder()"
 	      (click)='showPurchaseInfo(purchase)'>
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.software.softwareName }} </td>
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.unit.unitId }} </td>
@@ -53,11 +58,13 @@
 	          <td> {{ purchase.lastUpdated | date:'dd/MM/yy' }} </td>
 	          <!-- <td> {{ calcTotalAmount(purchase) }} Units </td> -->
 	      </tr>
-	    </template>
 	  </tbody>
 	</table>
 </div>
 
+<!-- 
+*ngIf="validOnSearch(purchase)"
+ -->
 
 <!-- 
 

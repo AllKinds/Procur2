@@ -44,7 +44,14 @@ export class Purchases {
 	advancedSearch = false;
 	advancedFilter = false;
 	user: User;
-
+	toggleDateOrder = false;
+	OrderByParam = 'lastUpdated';
+	toggleOrder = {
+		softId:	false,
+		unitId: false,
+		subUnit: false,
+		lastUpdated: false
+	}
 	constructor(
 		private purchaseService: 	PurchaseService,
 		private userService: 		AuthService,
@@ -59,6 +66,10 @@ export class Purchases {
 		this.searchControl.valueChanges
 			.debounceTime(200)
 			.subscribe(newValue => this.servSearch()); 
+	}
+
+	getOrder() {
+		return this.toggleOrder[this.OrderByParam]? [this.OrderByParam] : ['-'+this.OrderByParam];
 	}
 
 	getMyUser() {
