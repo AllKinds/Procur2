@@ -85,6 +85,18 @@ export class SoftwareDataService {
   						.catch(this.handleError);
   	}
 
-
-  	
+  	addNewField(id: string, fieldName: string, fieldValue: string) {
+  		let prop = {
+  			key: fieldName,
+  			value: fieldValue
+  		}
+  		
+  		return this.http.put(`${this.softwareUrl}/addField/${id}`, {"property": prop})
+  						.map((res: Response) => {
+  							let soft = this.extractData(res);
+  							updateSoftwareFromArray(this.softwares, id, soft);
+  							return soft;
+  						})
+  						.catch(this.handleError);
+  	}
 }

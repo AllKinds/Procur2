@@ -32,9 +32,19 @@
       </span>
 
     </li>
+    <template [ngIf]="software.properties"
+      <li *ngFor = "let key of software.properties" 
+      class="mdl-list__item mdl-list__item--two-line">
+        <span class="mdl-list__item-primary-content">
+          <span>{{ key }}</span>
+          <span class="mdl-list__item-sub-title">{{ software.properties[key] }}</span>
+        </span>
+      </li>
+    </template>
+
   </ul>
 
-  <div class="actions" *ngIf="!(toggleAddPrice || togglePurchaseSoft)">
+  <div class="actions" *ngIf="!(toggleAddPrice || togglePurchaseSoft || toggleAddField)">
     <button *ngIf = "userService.isBasicAdmin()"
       type="button"
       mdl-button (click)="toggleAddPrice = true"
@@ -46,6 +56,11 @@
       mdl-button (click)="onDelete(software)"
       [disabled]=false
       mdl-ripple mdl-colored="primary">Delete</button>
+
+    <button *ngIf = "userService.isBasicAdmin()"
+      type="button"
+      mdl-button (click)="toggleAddField = true"
+      mdl-ripple mdl-colored="primary">Add Field</button>
 
     <button *ngIf = "user.permission == 'Unit'"
       type="button"
@@ -78,6 +93,34 @@
       type="button"
       mdl-button (click)="updateYearPrice()"
       [disabled]=false
+      mdl-ripple mdl-colored="primary">Submit</button>
+  </div>
+
+  <div class="toggle-new-field" *ngIf = "toggleAddField">
+    <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored close-btn" 
+      mdl-ripple (click)="toggleAddField = false">
+        <mdl-icon>close</mdl-icon>
+      </button>
+    <mdl-textfield
+            label="Name"
+            name="fieldName"
+            type="string"
+            [(ngModel)]="newField.name"
+            floating-label
+            pattern="."></mdl-textfield>
+
+    <mdl-textfield
+            label="Value"
+            name="fieldValue"
+            type="string"
+            [(ngModel)]="newField.value"
+            floating-label
+            pattern="."></mdl-textfield>
+
+    <button *ngIf = "userService.isBasicAdmin()"
+      type="button"
+      mdl-button (click)="addNewField()"
+      [disabled]="!(newField.name && newField.value)"
       mdl-ripple mdl-colored="primary">Submit</button>
   </div>
 

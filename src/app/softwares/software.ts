@@ -10,7 +10,8 @@ export class Software {
 			public publisherName: string,
 			public licenceCost: number,
 			public _id?: string,
-			public pricesByYear?: Array<PriceByYear>
+			public pricesByYear?: Array<PriceByYear>,
+			public properties?: Object
 		){}
 }
 

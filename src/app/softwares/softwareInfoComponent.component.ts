@@ -22,9 +22,14 @@ export class SoftwareInfoComponent {
 	errorMsg: string;
 	public software: Software;
 	user: User;
-	toggleAddPrice = false;
-	togglePurchaseSoft = false;
+	toggleAddPrice 		= false;
+	togglePurchaseSoft 	= false;
+	toggleAddField		= false;
 
+	newField = {
+		name: "",
+		value: ""
+	}
 	newPriceForYear = new PriceByYear();
 	newPurchase 	= new AmountByYear();
 
@@ -95,6 +100,20 @@ export class SoftwareInfoComponent {
 				error 	 => console.log("Error: "+<any>error)
 			);
 		this.toggleAddPrice = false;
+	}
+
+	addNewField() {
+		if(!this.newField.name || !this.newField.value) {
+			return;
+		}
+
+		this.softwareDataService.addNewField(
+			this.software._id, this.newField.name, this.newField.value)
+			.subscribe(
+				software => console.log(software),
+				error 	 =>	console.log("Error: "+<any>error)
+				);
+		this.toggleAddField = false;
 	}
 }
 
