@@ -25,6 +25,20 @@ export class SoftwareDataService {
 		                })
 		                .catch(this.handleError);
 	}
+
+	getSoftwaresWithFilter(filter: string): Observable<Software[]> {
+		if(!filter) {
+			return this.getSoftwares();
+		}
+		return this.http.get(this.softwaresUrl+'/search/'+filter)
+						.map((res: Response) => {
+							let softs = this.extractData(res);
+		                	this.softwares = softs;
+		                	return softs;
+						})
+						.catch(this.handleError);
+	}
+
 	private extractData(res: Response) {
 		let body = res.json();
 		return body;

@@ -1,7 +1,9 @@
 <!-- <mdl-table mdl-shadow="2" [table-model]="tableModel"></mdl-table> -->
 
 <div id='software-div'>
-  <mdl-textfield id="software-search" type="text" label="Search..." [(ngModel)]="searchInput" floating-label></mdl-textfield>
+  <mdl-textfield id="software-search" type="text" label="Search..." 
+  [(ngModel)]="searchInput" [formControl]="searchControl"
+  floating-label></mdl-textfield>
 
   <table *ngIf="softwareDataService.softwares" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" id="software-table">
     <thead>

@@ -1,4 +1,5 @@
-import { Component, ViewChild, OnInit} from '@angular/core';
+import { Component, ViewChild, OnInit} 	from '@angular/core';
+import { FormControl }					from '@angular/forms';
 import { NewSoftwareDialog } from  './newSoftware/newSoftwareDialog.component';
 
 import { Software, getPriceByYear } from './software';
@@ -38,6 +39,9 @@ export class Softwares implements OnInit{
 	public currentYear = new Date().getFullYear();
 	private user: User;
 	public getSoftwarePriceByYear = getPriceByYear;
+
+	searchControl = new FormControl();
+
 	constructor(
 		private softwareDataService: SoftwareDataService,
 		private dialogService: 		 MdlDialogService,
@@ -48,6 +52,9 @@ export class Softwares implements OnInit{
 	  this.user = this.userService.user;
 	  console.log(this.user);
 	  this.getSoftwares();
+	  this.searchControl.valueChanges
+	  	  .debounceTime(200)
+	  	  .subscribe(newValue => this.servSearch());
 	}
 
 	getSoftwares() {
@@ -113,6 +120,13 @@ export class Softwares implements OnInit{
 
 	getOrder() {
 		return this.orderDesc[this.OrderByParam]? ['-' + this.OrderByParam] : [this.OrderByParam]; 
+	}
+
+	servSearch() {
+		this.softwareDataService.getSoftwaresWithFilter(this.searchInput)
+			.subscribe(
+				softwares => this.softwares = softwares,
+				error 	  => this.errorMessage = <any>error	);
 	}
 
 	public showDialog($event: MouseEvent) {
