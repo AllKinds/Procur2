@@ -82,9 +82,7 @@ export class Softwares implements OnInit{
 		 software.licenceCost.toString().includes(		this.searchInput.toLowerCase() );
 	}
 
-	showSoftwareInfo($event, index, software:Software){
-		console.log(event);
-		console.log(index);
+	showSoftwareInfo(software:Software){
 		console.log(software);
 
 		let pDialog = this.dialogService.showCustomDialog({
@@ -103,6 +101,18 @@ export class Softwares implements OnInit{
 	onCreateNewSoftware(newSoftware){
 		console.log(newSoftware);
 		this.addSoftware(newSoftware);
+	}
+
+	OrderByParam = 'softwareName';
+	orderDesc = {
+		softwareId: 	false,
+		softwareName:	false,
+		publisherName: 	false,
+		licenceCost: 	false
+	}
+
+	getOrder() {
+		return this.orderDesc[this.OrderByParam]? ['-' + this.OrderByParam] : [this.OrderByParam]; 
 	}
 
 	public showDialog($event: MouseEvent) {

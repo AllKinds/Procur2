@@ -21,7 +21,10 @@ import { SoftwareDataService }     from './softwares/software-data-service';
 import { PurchaseService }         from './purchases/purchase.service';
 import { MdlDialogService,  }      from 'angular2-mdl';
 //  Other
-import { OrderBy } from './orderBy';
+// Pipes
+import { OrderBy }   from './pipes/orderBy';
+import { keysPipe }  from './pipes/keysPipe';
+
 // ---------
 
 
@@ -35,7 +38,8 @@ import { OrderBy } from './orderBy';
     NewSoftwareDialog,
     LoginComponent,
     PageNotFoundComponent,
-    OrderBy
+    OrderBy,
+    keysPipe
   ],
   entryComponents: [ 
     SoftwareInfoComponent, 

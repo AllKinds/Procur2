@@ -21,3 +21,15 @@ table {
 .close-btn {
 	float: right;
 }
+
+.more-content {
+}
+
+#software-table > thead > tr > th {
+	/*left: 32px;*/
+}
+
+#software-table > thead > tr > th > button{
+	/*left: 32px;*/
+	float: right;
+}

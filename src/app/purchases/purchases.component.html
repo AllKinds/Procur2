@@ -33,7 +33,8 @@
 		      class="mdl-button mdl-button--icon">
 		      <mdl-icon *ngIf = "toggleOrder['softId']">keyboard_arrow_down</mdl-icon>
 		      <mdl-icon *ngIf = "!toggleOrder['softId']">keyboard_arrow_up</mdl-icon>
-	      </button>Software</th> -->
+	      </button> -->
+	      Software</th> 
 	      <th class="mdl-data-table__cell--non-numeric">Unit ID</th>
 	      <th class="mdl-data-table__cell--non-numeric">Sub Unit</th>
 	      <th> Current Price	</th>
@@ -47,8 +48,8 @@
 	    </tr>
 	  </thead>
 	  <tbody>	    
-	      <tr *ngFor = "let purchase of purchaseService.purchases | orderBy: getOrder()"
-	      (click)='showPurchaseInfo(purchase)'>
+	      <ng-container *ngFor = "let purchase of purchaseService.purchases | orderBy: getOrder()">
+	      <tr *ngIf = "validOnSearch(purchase)" (click)='showPurchaseInfo(purchase)'>
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.software.softwareName }} </td>
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.unit.unitId }} </td>
 	          <td class="mdl-data-table__cell--non-numeric" > {{ purchase.unit.subUnit }} </td>
@@ -58,6 +59,7 @@
 	          <td> {{ purchase.lastUpdated | date:'dd/MM/yy' }} </td>
 	          <!-- <td> {{ calcTotalAmount(purchase) }} Units </td> -->
 	      </tr>
+	      </ng-container>
 	  </tbody>
 	</table>
 </div>

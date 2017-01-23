@@ -10,7 +10,6 @@
   <ul class="demo-list-two mdl-list">
     <li class="mdl-list__item mdl-list__item--two-line">
       <span class="mdl-list__item-primary-content">
-        <i class="material-icons mdl-list__item-avatar">person</i>
         <span>Product ID</span>
         <span class="mdl-list__item-sub-title"> {{ software.softwareId }} </span>
       </span>
@@ -18,7 +17,6 @@
 
     <li class="mdl-list__item mdl-list__item--two-line">
       <span class="mdl-list__item-primary-content">
-        <i class="material-icons mdl-list__item-avatar">person</i>
         <span>Publisher Name</span>
         <span class="mdl-list__item-sub-title">{{ software.publisherName }}</span>
       </span>
@@ -26,14 +24,26 @@
 
     <li class="mdl-list__item mdl-list__item--two-line">
       <span class="mdl-list__item-primary-content">
-        <i class="material-icons mdl-list__item-avatar">person</i>
         <span>Licence Cost</span>
         <span class="mdl-list__item-sub-title">{{ software.licenceCost }}</span>
       </span>
 
     </li>
-    <template [ngIf]="software.properties"
-      <li *ngFor = "let key of software.properties" 
+    
+
+    <div class="more-content" *ngIf = "software.properties"> 
+      <button *ngIf="!showAllProps" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+        (click)="showAllProps = !showAllProps"
+      > <mdl-icon>expand_more</mdl-icon> 
+      </button>
+      <button *ngIf="showAllProps" class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"
+        (click)="showAllProps = !showAllProps"
+      > <mdl-icon>expand_less</mdl-icon>
+      </button>
+    </div>
+    
+    <template [ngIf]="software.properties && showAllProps">
+      <li *ngFor = "let key of software.properties | keys" 
       class="mdl-list__item mdl-list__item--two-line">
         <span class="mdl-list__item-primary-content">
           <span>{{ key }}</span>

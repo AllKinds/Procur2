@@ -3,28 +3,49 @@
 <div id='software-div'>
   <mdl-textfield id="software-search" type="text" label="Search..." [(ngModel)]="searchInput" floating-label></mdl-textfield>
 
-  <table *ngIf="softwareDataService.softwares" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+  <table *ngIf="softwareDataService.softwares" class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp" id="software-table">
     <thead>
       <tr>
-        <th class="mdl-data-table__cell--non-numeric">Product ID</th>
-        <th class="mdl-data-table__cell--non-numeric">Software Name</th>
-        <th class="mdl-data-table__cell--non-numeric">Publisher Name</th>
-        <th class="mdl-data-table__cell--non-numeric">Licence Cost</th>
+        <th class="mdl-data-table__cell--non-numeric">Product ID
+        <button (click)="orderDesc['softwareId'] = !orderDesc['softwareId'] ; OrderByParam='softwareId'" 
+            class="mdl-button mdl-button--icon">
+            <mdl-icon *ngIf = "orderDesc['softwareId']">keyboard_arrow_down</mdl-icon>
+            <mdl-icon *ngIf = "!orderDesc['softwareId']">keyboard_arrow_up</mdl-icon>
+          </button></th>
+
+        <th class="mdl-data-table__cell--non-numeric"> <span> Software Name </span>
+          <button (click)="orderDesc['softwareName'] = !orderDesc['softwareName'] ; OrderByParam='softwareName'" 
+            class="mdl-button mdl-button--icon">
+            <mdl-icon *ngIf = "orderDesc['softwareName']">keyboard_arrow_down</mdl-icon>
+            <mdl-icon *ngIf = "!orderDesc['softwareName']">keyboard_arrow_up</mdl-icon>
+          </button></th>
+
+        <th class="mdl-data-table__cell--non-numeric">Publisher Name
+        <button (click)="orderDesc['publisherName'] = !orderDesc['publisherName'] ; OrderByParam='publisherName'" 
+            class="mdl-button mdl-button--icon">
+            <mdl-icon *ngIf = "orderDesc['publisherName']">keyboard_arrow_down</mdl-icon>
+            <mdl-icon *ngIf = "!orderDesc['publisherName']">keyboard_arrow_up</mdl-icon>
+          </button></th>
+
+        <th class="mdl-data-table__cell--non-numeric">Licence Cost
+        <button (click)="orderDesc['licenceCost'] = !orderDesc['licenceCost'] ; OrderByParam='licenceCost'" 
+            class="mdl-button mdl-button--icon">
+            <mdl-icon *ngIf = "orderDesc['licenceCost']">keyboard_arrow_down</mdl-icon>
+            <mdl-icon *ngIf = "!orderDesc['licenceCost']">keyboard_arrow_up</mdl-icon>
+          </button></th>
+          
       </tr>
     </thead>
     <tbody>
-      <template 
-      ngFor let-software [ngForOf]="softwareDataService.softwares" 
-      let i = index>
-        <tr 
-        *ngIf="validOnSearch(software)"
-        (click)='showSoftwareInfo($event,i,software)'>
+      <ng-container *ngFor = "let software of softwareDataService.softwares | orderBy:getOrder()">
+        <tr *ngIf="validOnSearch(software)"
+        (click)='showSoftwareInfo(software)'>
             <td class="mdl-data-table__cell--non-numeric" > {{ software.softwareId }} </td>
             <td class="mdl-data-table__cell--non-numeric" > {{ software.softwareName }} </td>
             <td class="mdl-data-table__cell--non-numeric" > {{ software.publisherName }} </td>
             <td> {{ getSoftwarePriceByYear(software, currentYear) }}$ </td>
         </tr>
-      </template>
+      </ng-container>
     </tbody>
   </table>
 

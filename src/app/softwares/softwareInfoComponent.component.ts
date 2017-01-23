@@ -25,6 +25,7 @@ export class SoftwareInfoComponent {
 	toggleAddPrice 		= false;
 	togglePurchaseSoft 	= false;
 	toggleAddField		= false;
+	showAllProps		= false;
 
 	newField = {
 		name: "",
@@ -66,14 +67,15 @@ export class SoftwareInfoComponent {
 	}
 
 	purchaseSoftware(software: Software) {
-		let unitId = this.user ? this.user.unitId: '5881a78b3779430558ac1dc1'
+		let unitId = this.user ? this.user.unitId: '5881a78b3779430558ac1dc1';
 		let purchase = new Purchase(
 			software._id,
 			unitId,
 			[{
 				year: this.newPurchase.year,
 				amount: this.newPurchase.amount
-			}]
+			}],
+			new Date()
 		);
 		this.purhcaseDataService.addPurchase(purchase)
 			.subscribe(
