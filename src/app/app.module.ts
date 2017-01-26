@@ -4,9 +4,11 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule, JsonpModule }         from '@angular/http';
 import { MdlModule }                       from 'angular2-mdl';
 import { RouterModule }                    from '@angular/router';
+import { MaterialModule }                  from '@angular/material';
 import { AppRoutingModule }                from './app-routing.module';
 import { LoginRoutingModule }              from './login/login.module';
 import { UnitsModule }                     from './units/units.module';
+import { UsersModule }                     from './users/users.module';
 // Components
 import { AppComponent }             from './app.component';
 import { Softwares }                from './softwares/softwares.component';
@@ -24,6 +26,7 @@ import { MdlDialogService,  }      from 'angular2-mdl';
 // Pipes
 import { OrderBy }   from './pipes/orderBy';
 import { keysPipe }  from './pipes/keysPipe';
+import 'hammerjs';
 
 // ---------
 
@@ -56,7 +59,9 @@ import { keysPipe }  from './pipes/keysPipe';
     ReactiveFormsModule,
     LoginRoutingModule,
     UnitsModule,
-    AppRoutingModule
+    UsersModule,
+    AppRoutingModule,
+    MaterialModule.forRoot()
   ],
   providers: [
     SoftwareDataService,

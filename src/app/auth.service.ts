@@ -50,7 +50,7 @@ export class AuthService {
   }
 
   getUser(): Observable<User> { // 
-    return this.http.get(this.userUrl+'/Admin')
+    return this.http.get(this.userUrl)
             .map((res: Response) => {
               let user = this.extractData(res);
               this.user = user;

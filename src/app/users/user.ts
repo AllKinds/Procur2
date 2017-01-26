@@ -12,7 +12,7 @@ export class User {
 	name: string;
 	permission: Permissions;
 	authCode: string;
-	unitId: string;
+	unitId?: string;
 
 	constructor(id:string, name:string, permission?: Permissions, unitId?: string){
 		this.id = id;

@@ -1,6 +1,6 @@
 <div id='units-div' class="tab-view">
 	<mdl-textfield id="unit-search" type="text" label="Search..." [(ngModel)]="searchInput" floating-label></mdl-textfield>
-	<mdl-list *ngIf="unitService.units">
+	<mdl-list *ngIf="unitService.units" id="unit-list">
 		<template 
 		ngFor let-unit [ngForOf]="unitService.units" 
 		let i = index>
