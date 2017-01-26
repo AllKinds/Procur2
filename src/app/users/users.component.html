@@ -9,17 +9,17 @@
 		        <mdl-list-item-sub-title> {{ user.id }} </mdl-list-item-sub-title>
 		      </mdl-list-item-primary-content>
 		      <mdl-list-item-secondary-content>
-			   	<span>Select Unit</span>
+			   	<md-select placeholder="Choose unit" [(ngModel)]="user.unitId" name="unit">
+			   	  <md-option *ngFor="let unit of unitService.units" [value]="unit._id">
+			   	    {{unit.unitId}}
+			   	  </md-option>
+			   	</md-select>
+			   	<p>{{user.unitId}}</p>
 		      </mdl-list-item-secondary-content>
 		    </mdl-list-item>
 	    </ng-container>
   </mdl-list>   
   
-<!--   <md-select placeholder="Favorite food" [(ngModel)]="selectedValue" name="food">
-    <md-option *ngFor="let food of foods" [value]="food.value">
-      {{food.viewValue}}
-    </md-option>
-  </md-select>
-  <p> Selected value: {{selectedValue}} </p> -->
+
    
 </div>

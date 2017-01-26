@@ -14,11 +14,12 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 @Component ({
 	selector: 'users-tab',
 	templateUrl: 'users.component.html',
-	// styleUrls: ['users.component.css']
+	styleUrls: ['users.css']
 })
 
 export class UsersMgmnt {
 	private users;
+	private units;
 	private searchInput="";
 	public erroMsg: string;
 	userId: string = "";
@@ -41,15 +42,21 @@ export class UsersMgmnt {
 
 	public ngOnInit() {
 	  this.getUsers();
+	  this.getUnits();
 	}
 
 	getUsers() {
 		this.userService.getUsers()
 						.subscribe(
-							users 		=> this.users = users,
+							users 		=> {this.users = users; console.log(this.users);},
 							error 		=> this.erroMsg = <any>error);
-		console.log(this.users);
-		console.log(this.erroMsg);
+	}
+
+	getUnits() {
+		this.unitService.getUnits()
+						.subscribe(
+							units 		=> {this.units = units; console.log(this.units);},
+							error 		=> this.erroMsg = <any>error);
 	}
 
 	// validOnSearch(user: User): boolean {
